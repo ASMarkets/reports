@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BYRN — Byrna Technologies | Pre-Earnings Checkpoint | The Exclusion Filter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+--navy:#0E1217;
+--navy-2:#151b23;
+--gold:#C9A24A;
+--cream:#E9E0CC;
+--slate:#495564;
+--bad:#B4553F;
+--good:#5F9E79;
+--line: rgba(233,224,204,0.12);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--navy);color:var(--cream);}
+body{
+font-family:'DM Sans', sans-serif;
+line-height:1.6;
+font-size:16px;
+-webkit-font-smoothing:antialiased;
+}
+.glow{
+position:fixed; top:-10%; left:50%; transform:translateX(-50%);
+width:900px; height:600px; border-radius:50%;
+background:radial-gradient(ellipse at center, rgba(201,162,74,0.10), transparent 70%);
+pointer-events:none; z-index:0;
+}
+.wrap{max-width:820px;margin:0 auto;padding:56px 24px 80px;position:relative;z-index:1;}
+
+.imprint{
+font-family:'IBM Plex Mono', monospace;
+font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+color:var(--gold); text-align:right; margin-bottom:36px; opacity:.85;
+}
+
+header.hero{margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:32px;}
+.kicker{
+font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.16em;
+text-transform:uppercase; color:var(--slate); margin-bottom:14px;
+}
+.kicker b{color:var(--gold); font-weight:600;}
+h1{
+font-family:'Source Serif 4', serif; font-weight:700; font-size:2.5rem;
+line-height:1.1; margin:0 0 8px; color:#fff;
+}
+h1 .ticker{
+font-family:'IBM Plex Mono', monospace; font-size:1.15rem; color:var(--gold);
+font-weight:600; display:block; margin-bottom:6px; letter-spacing:.04em;
+}
+.subhead{font-size:1.05rem; color:var(--cream); opacity:.75; max-width:620px;}
+
+.verdict-row{display:flex; align-items:center; gap:16px; margin-top:26px; flex-wrap:wrap;}
+.verdict-badge{
+display:inline-flex; align-items:center; gap:10px;
+background:rgba(201,162,74,0.10); border:1px solid rgba(201,162,74,0.45);
+color:var(--gold); font-family:'IBM Plex Mono', monospace; font-weight:600;
+font-size:.92rem; letter-spacing:.08em; text-transform:uppercase;
+padding:10px 18px; border-radius:3px;
+}
+.verdict-badge .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);}
+.as-of{
+font-family:'IBM Plex Mono', monospace; font-size:.78rem; color:var(--slate);
+letter-spacing:.05em;
+}
+
+section{margin:44px 0;}
+h2{
+font-family:'Source Serif 4', serif; font-weight:600; font-size:1.3rem;
+color:#fff; margin:0 0 16px; padding-bottom:10px; border-bottom:1px solid var(--line);
+}
+h2 .num{color:var(--gold); font-family:'IBM Plex Mono', monospace; font-size:.85rem; margin-right:10px;}
+p{margin:0 0 14px; color:var(--cream); opacity:.92;}
+
+.fact-grid{
+display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden;
+margin:18px 0;
+}
+.fact{background:var(--navy-2); padding:16px 18px;}
+.fact .label{
+font-family:'IBM Plex Mono', monospace; font-size:.7rem; letter-spacing:.08em;
+text-transform:uppercase; color:var(--slate); margin-bottom:6px;
+}
+.fact .value{font-family:'IBM Plex Mono', monospace; font-size:1.05rem; color:var(--cream); font-weight:500;}
+
+table{width:100%; border-collapse:collapse; margin:18px 0; font-size:.95rem;}
+th,td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line);}
+th{
+font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.08em;
+text-transform:uppercase; color:var(--slate); font-weight:500;
+}
+td{font-family:'IBM Plex Mono', monospace; color:var(--cream);}
+tr.highlight td{color:var(--gold); font-weight:600;}
+td.name{font-family:'DM Sans', sans-serif; color:var(--cream); font-weight:500;}
+td.pos{color:var(--good);} td.neg{color:var(--bad);}
+
+.callout{
+background:rgba(201,162,74,0.06); border-left:3px solid var(--gold);
+padding:16px 20px; margin:20px 0; border-radius:0 4px 4px 0;
+}
+.callout p{margin:0; opacity:1;}
+
+.quote{
+font-family:'Source Serif 4', serif; font-style:italic; font-size:1.08rem;
+color:var(--cream); border-left:3px solid var(--slate); padding:4px 0 4px 20px;
+margin:18px 0;
+}
+.quote cite{
+display:block; margin-top:8px; font-family:'IBM Plex Mono', monospace;
+font-style:normal; font-size:.75rem; color:var(--slate); letter-spacing:.04em;
+}
+
+.risk-item{display:flex; gap:12px; margin-bottom:14px; align-items:flex-start;}
+.risk-item .mark{color:var(--bad); font-family:'IBM Plex Mono', monospace; font-weight:600; flex-shrink:0;}
+
+.verdict-box{
+background:var(--navy-2); border:1px solid var(--line); border-radius:6px;
+padding:28px 26px; margin-top:16px;
+}
+.verdict-box .seal{
+font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:1.1rem;
+color:var(--gold); letter-spacing:.06em; text-transform:uppercase; margin-bottom:14px;
+display:block;
+}
+
+.data-as-of-line{
+font-family:'IBM Plex Mono', monospace; font-size:.72rem; color:var(--slate);
+letter-spacing:.04em; margin-top:8px;
+}
+
+.rule-strip{
+font-family:'IBM Plex Mono', monospace; font-size:.78rem; letter-spacing:.08em;
+text-transform:uppercase; color:var(--slate); text-align:center;
+padding:22px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+margin:48px 0;
+}
+.rule-strip span{margin:0 10px;}
+
+footer{margin-top:48px;}
+.disclaimer{
+font-size:.85rem; color:var(--slate); line-height:1.7;
+border-top:1px solid var(--line); padding-top:24px;
+}
+.disclaimer p{color:var(--slate); opacity:1; margin-bottom:10px;}
+.disclaimer strong{color:var(--cream);}
+.sources{font-size:.82rem; color:var(--slate); margin-top:22px;}
+.sources h3{
+font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.1em;
+text-transform:uppercase; color:var(--slate); font-weight:500; margin-bottom:10px;
+}
+.sources ul{margin:0; padding-left:18px;}
+.sources li{margin-bottom:6px;}
+
+.navstrip{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+.navstrip a{
+font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.06em;
+text-transform:uppercase; color:var(--slate); text-decoration:none;
+border:1px solid var(--line); border-radius:3px; padding:6px 12px;
+}
+.navstrip a:hover{color:var(--gold); border-color:rgba(201,162,74,.45);}
+.navstrip a.here{color:var(--gold); border-color:rgba(201,162,74,.45); background:rgba(201,162,74,.06);}
+
+.brandfoot{
+text-align:center; margin-top:40px; font-family:'IBM Plex Mono', monospace;
+font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); opacity:.7;
+}
+
+@media (max-width:600px){
+h1{font-size:1.9rem;}
+.fact-grid{grid-template-columns:1fr;}
+.wrap{padding:36px 18px 60px;}
+}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+<div class="imprint">AS Markets</div>
+
+<header class="hero">
+<div class="kicker">The Exclusion Filter · Episode 06 · <b>Earnings &amp; The Today Test</b> — Checkpoint 1 of 3</div>
+<h1><span class="ticker">BYRN — Nasdaq</span>Pre-Earnings: The Habit That Broke</h1>
+<p class="subhead">A cold, mechanical read of what was already visible in the days before a report — no opinion, no prediction, just pattern. Byrna Technologies, Inc.</p>
+
+<div class="verdict-row">
+<div class="verdict-badge"><span class="dot"></span>Not a prediction — a checklist</div>
+<div class="as-of">DATA AS OF JULY 8, 2026 — THE LAST TRADING DAY BEFORE THE REPORT</div>
+</div>
+</header>
+
+<section>
+<h2><span class="num">01</span>The business, in one sentence</h2>
+<p>Byrna makes handheld, CO2-powered less-lethal personal defense launchers — a non-firearm alternative to a handgun. It sells directly to consumers online, through dealers, and through retail chains, with ammunition and accessories as the recurring purchase behind the launcher itself.</p>
+<div class="fact-grid">
+<div class="fact"><div class="label">What it does</div><div class="value">Less-lethal defense launchers</div></div>
+<div class="fact"><div class="label">How it makes money</div><div class="value">DTC · dealer · retail</div></div>
+<div class="fact"><div class="label">Products that matter</div><div class="value">Launcher family + ammunition</div></div>
+<div class="fact"><div class="label">Where it operates</div><div class="value">Primarily United States</div></div>
+</div>
+<div class="data-as-of-line">DATA AS OF: company filings, most recent fiscal year</div>
+</section>
+
+<section>
+<h2><span class="num">02</span>The habit that broke</h2>
+<p>This process runs cold before an earnings report — no opinion, just pattern. And here, the loudest signal wasn't a headline. It was a habit the company broke.</p>
+<p>Byrna has a track record of pre-announcing revenue weeks ahead of its official report — it had done exactly that for two straight quarters. This time, thirty-nine days after the quarter closed, that number never came. In its place: five unrelated announcements about marketing and personnel — nothing about sales.</p>
+<div class="callout">
+<p>An absence, read as a signal, is still evidence — the pattern was two-for-two before this quarter went silent.</p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">03</span>What was already on the record</h2>
+<p>That silence followed something the company had already put in writing. Three months earlier, on the previous earnings call, management said the coming quarter was — its own words —</p>
+<div class="quote">
+&#8220;developing below our expectations,&#8221;
+<cite>CEO, prior earnings call — guidance pulled, three months before this report</cite>
+</div>
+<p>and pulled formal guidance because it didn't have enough internal visibility to give one.</p>
+</section>
+
+<section>
+<h2><span class="num">04</span>The reaction history</h2>
+<p>The market's reaction to this stock's last four reports has been violent in both directions — swings from roughly minus thirty-one percent to plus twenty-one percent in a single session, with nothing calm in between.</p>
+<table>
+<tr><th>Quarter</th><th>Same-day price reaction</th></tr>
+<tr><td class="name">Q2 FY25</td><td class="neg">&#8722;21.3%</td></tr>
+<tr><td class="name">Q3 FY25</td><td class="pos">+21.2%</td></tr>
+<tr><td class="name">Q4 FY25</td><td class="pos">+7.7%</td></tr>
+<tr class="highlight"><td class="name">Q1 FY26</td><td class="neg">&#8722;31.1%</td></tr>
+</table>
+<p>One of those swings is the sharpest warning of the four: a quarter with revenue up over forty percent year over year and earnings beating estimates by nearly sixty percent — and it still closed down twenty-one percent on the day. In this stock, a good number has not historically been paid for.</p>
+</section>
+
+<section>
+<h2><span class="num">05</span>The checklist</h2>
+<div class="verdict-box">
+<span class="seal">Not a prediction — a checklist</span>
+<p>None of this says what the number will be. It's a checklist, and by the day before the report, every box on it was checked in the same direction: a broken pre-announcement habit, a guidance pull already on the record, and a reaction history that has never rewarded a good print in this name.</p>
+<p style="margin-bottom:0">The pre-earnings checkpoint doesn't forecast an outcome — it establishes what was already knowable going in, so the post-earnings read can be judged against it, not against hindsight.</p>
+</div>
+</section>
+
+<div class="rule-strip">
+<span>No fair value</span>&#183;<span>No price target</span>&#183;<span>No re-entry price</span>
+</div>
+
+<div class="navstrip">
+<a href="ep06-byrn-preearnings.html" class="here">1 &#183; Pre-Earnings</a>
+<a href="ep06-byrn-postearnings.html">2 &#183; Post-Earnings</a>
+<a href="ep06-byrn-audit.html">3 &#183; The Today Test</a>
+</div>
+
+<footer>
+<div class="disclaimer">
+<p><strong>Position:</strong> I hold no position in anything I cover here, and I take none for at least ninety days after publishing.</p>
+<p>This is not financial advice. Investing involves risk, including the risk of loss of capital. I am not a licensed financial advisor. This report reflects a pre-earnings pattern read only, built for due diligence — it is not a recommendation to buy or sell any security, and it makes no claim about the current price of BYRN stock, its fair value, or any re-entry level.</p>
+</div>
+<div class="sources">
+<h3>Sources</h3>
+<ul>
+<li>Byrna Technologies — prior-quarter earnings call transcript, guidance withdrawal on the record</li>
+<li>Byrna Technologies — investor relations, pre-announcement history (prior two quarters)</li>
+<li>TradingView — earnings history, EPS/revenue surprise and same-day price reaction, last four quarters</li>
+</ul>
+</div>
+<div class="brandfoot">The Exclusion Filter — Due Diligence Before Price</div>
+</footer>
+
+</div>
+</body>
+</html>
