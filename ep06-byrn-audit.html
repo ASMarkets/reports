@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BYRN — Byrna Technologies | The Today Test | The Exclusion Filter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+--navy:#0E1217;
+--navy-2:#151b23;
+--gold:#C9A24A;
+--cream:#E9E0CC;
+--slate:#495564;
+--bad:#B4553F;
+--good:#5F9E79;
+--line: rgba(233,224,204,0.12);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--navy);color:var(--cream);}
+body{
+font-family:'DM Sans', sans-serif;
+line-height:1.6;
+font-size:16px;
+-webkit-font-smoothing:antialiased;
+}
+.glow{
+position:fixed; top:-10%; left:50%; transform:translateX(-50%);
+width:900px; height:600px; border-radius:50%;
+background:radial-gradient(ellipse at center, rgba(201,162,74,0.10), transparent 70%);
+pointer-events:none; z-index:0;
+}
+.wrap{max-width:820px;margin:0 auto;padding:56px 24px 80px;position:relative;z-index:1;}
+
+.imprint{
+font-family:'IBM Plex Mono', monospace;
+font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+color:var(--gold); text-align:right; margin-bottom:36px; opacity:.85;
+}
+
+header.hero{margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:32px;}
+.kicker{
+font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.16em;
+text-transform:uppercase; color:var(--slate); margin-bottom:14px;
+}
+.kicker b{color:var(--gold); font-weight:600;}
+h1{
+font-family:'Source Serif 4', serif; font-weight:700; font-size:2.5rem;
+line-height:1.1; margin:0 0 8px; color:#fff;
+}
+h1 .ticker{
+font-family:'IBM Plex Mono', monospace; font-size:1.15rem; color:var(--gold);
+font-weight:600; display:block; margin-bottom:6px; letter-spacing:.04em;
+}
+.subhead{font-size:1.05rem; color:var(--cream); opacity:.75; max-width:620px;}
+
+.verdict-row{display:flex; align-items:center; gap:16px; margin-top:26px; flex-wrap:wrap;}
+.verdict-badge{
+display:inline-flex; align-items:center; gap:10px;
+background:rgba(180,85,63,0.10); border:1px solid rgba(180,85,63,0.45);
+color:#D08B78; font-family:'IBM Plex Mono', monospace; font-weight:700;
+font-size:1rem; letter-spacing:.1em; text-transform:uppercase;
+padding:11px 20px; border-radius:3px;
+}
+.verdict-badge .dot{width:9px;height:9px;border-radius:50%;background:var(--bad);}
+.as-of{
+font-family:'IBM Plex Mono', monospace; font-size:.78rem; color:var(--slate);
+letter-spacing:.05em;
+}
+
+section{margin:44px 0;}
+h2{
+font-family:'Source Serif 4', serif; font-weight:600; font-size:1.3rem;
+color:#fff; margin:0 0 16px; padding-bottom:10px; border-bottom:1px solid var(--line);
+}
+h2 .num{color:var(--gold); font-family:'IBM Plex Mono', monospace; font-size:.85rem; margin-right:10px;}
+p{margin:0 0 14px; color:var(--cream); opacity:.92;}
+
+.fact-grid{
+display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden;
+margin:18px 0;
+}
+.fact{background:var(--navy-2); padding:16px 18px;}
+.fact .label{
+font-family:'IBM Plex Mono', monospace; font-size:.7rem; letter-spacing:.08em;
+text-transform:uppercase; color:var(--slate); margin-bottom:6px;
+}
+.fact .value{font-family:'IBM Plex Mono', monospace; font-size:1.05rem; color:var(--cream); font-weight:500;}
+
+table{width:100%; border-collapse:collapse; margin:18px 0; font-size:.95rem;}
+th,td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line);}
+th{
+font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.08em;
+text-transform:uppercase; color:var(--slate); font-weight:500;
+}
+td{font-family:'IBM Plex Mono', monospace; color:var(--cream);}
+td.name{font-family:'DM Sans', sans-serif; color:var(--cream); font-weight:500;}
+
+.callout{
+background:rgba(201,162,74,0.06); border-left:3px solid var(--gold);
+padding:16px 20px; margin:20px 0; border-radius:0 4px 4px 0;
+}
+.callout p{margin:0; opacity:1;}
+
+.quote{
+font-family:'Source Serif 4', serif; font-style:italic; font-size:1.15rem;
+color:#fff; text-align:center; padding:8px 10px; margin:22px 0;
+}
+
+.risk-item{display:flex; gap:12px; margin-bottom:14px; align-items:flex-start;}
+.risk-item .mark{color:var(--good); font-family:'IBM Plex Mono', monospace; font-weight:600; flex-shrink:0;}
+
+.verdict-box{
+background:var(--navy-2); border:1px solid var(--line); border-radius:6px;
+padding:28px 26px; margin-top:16px;
+}
+.verdict-box .seal{
+font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:1.1rem;
+color:#D08B78; letter-spacing:.06em; text-transform:uppercase; margin-bottom:14px;
+display:block;
+}
+
+.rulebox{
+background:rgba(201,162,74,.06); border:1px solid rgba(201,162,74,.35); border-radius:6px;
+padding:22px 24px; margin-top:16px;
+}
+.rulebox .lab{
+font-family:'IBM Plex Mono', monospace; font-size:.78rem; letter-spacing:.1em;
+text-transform:uppercase; color:var(--gold); margin-bottom:10px; display:block;
+}
+.rulebox p{margin:0; font-family:'Source Serif 4', serif; font-size:1.1rem; color:#fff; opacity:1;}
+
+.data-as-of-line{
+font-family:'IBM Plex Mono', monospace; font-size:.72rem; color:var(--slate);
+letter-spacing:.04em; margin-top:8px;
+}
+
+.rule-strip{
+font-family:'IBM Plex Mono', monospace; font-size:.78rem; letter-spacing:.08em;
+text-transform:uppercase; color:var(--slate); text-align:center;
+padding:22px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+margin:48px 0;
+}
+.rule-strip span{margin:0 10px;}
+
+footer{margin-top:48px;}
+.disclaimer{
+font-size:.85rem; color:var(--slate); line-height:1.7;
+border-top:1px solid var(--line); padding-top:24px;
+}
+.disclaimer p{color:var(--slate); opacity:1; margin-bottom:10px;}
+.disclaimer strong{color:var(--cream);}
+.sources{font-size:.82rem; color:var(--slate); margin-top:22px;}
+.sources h3{
+font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.1em;
+text-transform:uppercase; color:var(--slate); font-weight:500; margin-bottom:10px;
+}
+.sources ul{margin:0; padding-left:18px;}
+.sources li{margin-bottom:6px;}
+
+.navstrip{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+.navstrip a{
+font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.06em;
+text-transform:uppercase; color:var(--slate); text-decoration:none;
+border:1px solid var(--line); border-radius:3px; padding:6px 12px;
+}
+.navstrip a:hover{color:var(--gold); border-color:rgba(201,162,74,.45);}
+.navstrip a.here{color:var(--gold); border-color:rgba(201,162,74,.45); background:rgba(201,162,74,.06);}
+
+.brandfoot{
+text-align:center; margin-top:40px; font-family:'IBM Plex Mono', monospace;
+font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); opacity:.7;
+}
+
+@media (max-width:600px){
+h1{font-size:1.9rem;}
+.fact-grid{grid-template-columns:1fr;}
+.wrap{padding:36px 18px 60px;}
+}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+<div class="imprint">AS Markets</div>
+
+<header class="hero">
+<div class="kicker">The Exclusion Filter · Episode 06 · <b>Earnings &amp; The Today Test</b> — Checkpoint 3 of 3</div>
+<h1><span class="ticker">BYRN — Nasdaq</span>The Today Test</h1>
+<p class="subhead">The only checkpoint in this process that runs after a decision has already been made — and the one built to ignore the one thing that usually distorts that judgment: what you already paid.</p>
+
+<div class="verdict-row">
+<div class="verdict-badge"><span class="dot"></span>Today Test: No</div>
+<div class="as-of">DATA AS OF JULY 17&#8211;20, 2026 &#8212; INSIDER-BUYING UPDATE THROUGH AUGUST 6, 2026</div>
+</div>
+</header>
+
+<section>
+<h2><span class="num">01</span>The question it asks</h2>
+<p>Every position, eventually, faces the same question — win or lose: would you buy this again, today, at today's price, knowing everything you know now? That's the Today Test. It doesn't ask what a position is worth. It asks one thing only: is this still a business worth owning, today, judged with no memory of what was paid for it?</p>
+</section>
+
+<section>
+<h2><span class="num">02</span>The position, framed without a price tag</h2>
+<p>In this case, a position was opened seven trading days before the report — small, on purpose, the size this process only ever risks going into a binary event like an earnings report. No cushion built in. Position size is never stated here in dollars or share count, by design — only that it was intentionally small, and that the entry sat inside a window this same case would go on to close for good, permanently, going forward (see section 06).</p>
+</section>
+
+<section>
+<h2><span class="num">03</span>What the test found</h2>
+<p>The test ran in the days after the drop. The balance sheet hadn't changed — still no debt, still cash on hand. But the reason for owning it had. Management confirmed, on the record, that growth was paused, not accelerating, and the thesis that justified the entry no longer matched what the company was actually saying about itself.</p>
+<div class="quote">&#8220;Is this still a business worth owning, today &#8212; blind to what it already cost you?&#8221;</div>
+<div class="verdict-box">
+<span class="seal">Today Test: No</span>
+<p style="margin-bottom:0">Here, the answer came back no — not because the loss was large, but because the reason for holding had already stopped being true.</p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">04</span>A later signal — and why it doesn't undo the verdict</h2>
+<p>One more fact worth naming, because it tests the discipline itself, not just the stock. In the days right after the drop, company directors who'd been silent for three months started buying — five separate purchases from three different insiders within two and a half weeks.</p>
+<div class="callout">
+<p>That doesn't undo a Today Test that already ran on the facts available at the time. It's new information, arriving after the verdict — and the discipline is to re-run the test, not to quietly assume the old answer still holds forever. A process that updates when the facts do isn't indecisive. A process that never updates is just stubborn.</p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">05</span>What the three checkpoints, together, prove</h2>
+<p>Put the three checkpoints together, and here's what an earnings event actually tests — not whether a stock goes up or down on the day, but whether a process stays honest before, during, and after the surprise.</p>
+<table>
+<tr><th>Checkpoint</th><th>What it found</th></tr>
+<tr><td class="name">01 &#183; Pre-Earnings</td><td>A habit broken — and a warning already on the record</td></tr>
+<tr><td class="name">02 &#183; Post-Earnings</td><td>The number confirmed exactly what the silence had implied</td></tr>
+<tr><td class="name">03 &#183; The Today Test</td><td>Cost stopped mattering. Only question: is the reason for owning still true?</td></tr>
+</table>
+</section>
+
+<section>
+<h2><span class="num">06</span>The rule this case created</h2>
+<p>This is, in fact, the exact kind of case that led this process to add a rule it didn't have before:</p>
+<div class="rulebox">
+<span class="lab">The rule this case created</span>
+<p>No new position within a set number of trading sessions of a confirmed earnings date — unless the pre-earnings checkpoint gives a clear green light.</p>
+</div>
+<p style="margin-top:16px">The report didn't create this risk. It only made it impossible to keep ignoring.</p>
+</section>
+
+<div class="rule-strip">
+<span>No fair value</span>&#183;<span>No price target</span>&#183;<span>No re-entry price</span>
+</div>
+
+<div class="navstrip">
+<a href="ep06-byrn-preearnings.html">1 &#183; Pre-Earnings</a>
+<a href="ep06-byrn-postearnings.html">2 &#183; Post-Earnings</a>
+<a href="ep06-byrn-audit.html" class="here">3 &#183; The Today Test</a>
+</div>
+
+<footer>
+<div class="disclaimer">
+<p><strong>Position:</strong> I hold no position in anything I cover here, and I take none for at least ninety days after publishing. The position described in this report was closed in full on July 20, 2026, and no longer exists.</p>
+<p>This is not financial advice. Investing involves risk, including the risk of loss of capital. I am not a licensed financial advisor. This report is a worked example of a process checkpoint, built for due diligence education — it is not a recommendation to buy or sell any security, and it makes no claim about the current price of BYRN stock, its fair value, or any re-entry level.</p>
+</div>
+<div class="sources">
+<h3>Sources</h3>
+<ul>
+<li>Byrna Technologies — Q2 FY2026 earnings call transcript, management commentary on forward growth</li>
+<li>Byrna Technologies — Form 4 insider transaction filings, post-report window</li>
+<li>Internal process note — pre-earnings entry-window rule, adopted following this case</li>
+</ul>
+</div>
+<div class="brandfoot">The Exclusion Filter — Due Diligence Before Price</div>
+</footer>
+
+</div>
+</body>
+</html>
