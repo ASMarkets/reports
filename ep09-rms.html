@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermès International (RMS) | The Deep Dive Report | The Exclusion Filter</title>
+<meta name="description" content="Hermès International — business, products, regions, competition, financial strength and business risks. Company data only. No price targets, no position.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0E1217; --navy-2:#151b23; --navy-3:#1b222c;
+    --gold:#C9A24A; --cream:#E9E0CC; --slate:#495564; --slate-2:#7d8795;
+    --bad:#B4553F; --good:#5F9E79;
+    --line:rgba(233,224,204,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--navy);color:var(--cream);}
+  body{font-family:'DM Sans',sans-serif;line-height:1.62;font-size:16px;-webkit-font-smoothing:antialiased;}
+  .glow{position:fixed;top:-10%;left:50%;transform:translateX(-50%);width:900px;max-width:100vw;height:600px;border-radius:50%;
+    background:radial-gradient(ellipse at center,rgba(201,162,74,0.10),transparent 70%);pointer-events:none;z-index:0;}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 20px 80px;position:relative;z-index:1;}
+  .imprint{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;margin-bottom:32px;opacity:.85;}
+  header.hero{margin-bottom:36px;border-bottom:1px solid var(--line);padding-bottom:30px;}
+  .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-2);margin-bottom:14px;}
+  .kicker b{color:var(--gold);font-weight:600;}
+  h1{font-family:'Source Serif 4',serif;font-weight:700;font-size:2.5rem;line-height:1.1;margin:0 0 10px;color:#fff;}
+  h1 .ticker{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--gold);font-weight:600;display:block;margin-bottom:8px;letter-spacing:.04em;}
+  .subhead{font-size:1.06rem;color:var(--cream);opacity:.8;max-width:660px;margin:0;}
+  .stamp{display:inline-block;margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gold);border:1px solid rgba(201,162,74,.45);padding:8px 14px;border-radius:3px;background:rgba(201,162,74,.07);}
+  .asof{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--slate-2);letter-spacing:.06em;text-transform:uppercase;margin:6px 0 16px;}
+  .asof b{color:var(--cream);font-weight:500;}
+  nav.toc{display:flex;flex-wrap:wrap;gap:6px 14px;margin:18px 0 0;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
+  nav.toc a{color:var(--slate-2);text-decoration:none;border-bottom:1px dotted var(--slate);}
+  nav.toc a:hover{color:var(--gold);}
+  section{margin:48px 0;}
+  h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:1.35rem;color:#fff;margin:0 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+  h2 .num{color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.85rem;margin-right:10px;}
+  h3{font-family:'DM Sans',sans-serif;font-size:1rem;color:#fff;margin:26px 0 8px;font-weight:700;}
+  p{margin:0 0 14px;opacity:.93;}
+  strong{color:#fff;}
+  .panels{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .panel{background:var(--navy-2);padding:18px 20px;}
+  .panel .label{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .panel p{margin:0;font-size:.95rem;}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .kpi{background:var(--navy-2);padding:14px 16px;}
+  .kpi .v{font-family:'IBM Plex Mono',monospace;font-size:1.25rem;color:#fff;font-weight:600;}
+  .kpi .l{font-size:.78rem;color:var(--slate-2);line-height:1.35;margin-top:4px;}
+  .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:520px;}
+  th,td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  th:first-child,td:first-child{text-align:left;white-space:normal;}
+  th{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--slate-2);font-weight:500;}
+  td{font-family:'IBM Plex Mono',monospace;color:var(--cream);}
+  td:first-child{font-family:'DM Sans',sans-serif;font-weight:500;}
+  tr.hl td{color:var(--gold);font-weight:600;}
+  table.peers td:first-child{min-width:250px;}
+  table.text th,table.text td{text-align:left;white-space:normal;font-family:'DM Sans',sans-serif;}
+  table.text td:first-child{font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+  table.peers td:last-child,table.peers th:last-child{white-space:normal;text-align:left;font-size:.78rem;color:var(--slate-2);}
+  tr.total td{border-top:1px solid rgba(233,224,204,.3);font-weight:600;}
+  .neg{color:var(--bad);} .pos{color:var(--good);}
+  .note{font-size:.8rem;color:var(--slate-2);margin:-6px 0 14px;line-height:1.5;}
+  .callout{background:rgba(201,162,74,0.06);border-left:3px solid var(--gold);padding:16px 20px;margin:20px 0;border-radius:0 4px 4px 0;}
+  .callout p{margin:0;opacity:1;}
+  /* bars */
+  .bars{margin:18px 0;}
+  .bar-row{display:grid;grid-template-columns:190px 1fr 70px;gap:12px;align-items:center;margin:8px 0;font-size:.88rem;}
+  .bar-row .n{color:var(--cream);}
+  .bar-track{height:12px;background:var(--navy-3);border-radius:2px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--slate);}
+  .bar-fill.gold{background:var(--gold);}
+  .bar-row .v{font-family:'IBM Plex Mono',monospace;text-align:right;color:var(--cream);}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+  .engine{background:var(--navy-2);border:1px solid var(--line);border-radius:4px;padding:18px 20px;}
+  .engine .big{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--gold);line-height:1;}
+  .engine.b .big{color:var(--slate-2);}
+  .engine .cap{font-size:.85rem;color:var(--slate-2);margin-top:8px;}
+  .engine h4{margin:0 0 10px;font-size:.78rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--cream);}
+  .risk{border:1px solid var(--line);border-radius:4px;background:var(--navy-2);padding:16px 18px;margin:12px 0;}
+  .risk h4{margin:0 0 6px;font-size:1rem;color:#fff;}
+  .risk .tag{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bad);margin-bottom:6px;display:block;}
+  .risk p{margin:0;font-size:.93rem;}
+  ul.plain{margin:0 0 14px;padding-left:18px;} ul.plain li{margin:4px 0;}
+  .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .timeline div{background:var(--navy-2);padding:12px 12px;text-align:center;}
+  .timeline .y{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--slate-2);}
+  .timeline .g{font-family:'IBM Plex Mono',monospace;font-size:1.3rem;color:#fff;font-weight:600;}
+  .timeline .last .g{color:var(--gold);}
+  .strip{margin-top:56px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;}
+  .disclaimer{margin-top:28px;background:var(--navy-2);border:1px solid var(--line);border-radius:4px;padding:20px 22px;font-size:.88rem;}
+  .disclaimer p{margin:0 0 10px;}
+  .disclaimer .pos-line{font-family:'Source Serif 4',serif;font-style:italic;font-size:1.02rem;color:#fff;}
+  .sources{margin-top:28px;font-size:.8rem;color:var(--slate-2);}
+  .sources h3{font-size:.78rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-2);}
+  .sources ol{padding-left:18px;margin:0;} .sources li{margin:4px 0;}
+  .sources a{color:var(--slate-2);}
+  footer{margin-top:40px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-2);}
+  footer b{color:var(--gold);font-weight:600;}
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px;}
+    h1{font-size:1.9rem;}
+    .panels,.split{grid-template-columns:1fr;}
+    .kpis{grid-template-columns:repeat(2,1fr);}
+    .timeline{grid-template-columns:repeat(5,1fr);}
+    .timeline .g{font-size:1rem;}
+    .bar-row{grid-template-columns:120px 1fr 56px;font-size:.8rem;}
+    table.peers td:first-child{min-width:170px;}
+  }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+<div class="imprint">The Exclusion Filter · The Deep Dive · Episode 9</div>
+
+<header class="hero">
+  <div class="kicker"><b>Company report</b> · Luxury goods · Euronext Paris</div>
+  <h1><span class="ticker">EURONEXT: RMS</span>Hermès International</h1>
+  <p class="subhead">A French luxury house that designs, makes and sells its own objects — mostly hand-stitched leather bags made in France. What it does, where the money comes from, how it compares with its peers, and what the latest reports show about its strength and its risks.</p>
+  <div class="stamp">No price targets · No position</div>
+  <p class="asof" style="margin-top:14px">Data as of <b>29 July 2026</b> (half-year report, H1 2026) and <b>12 February 2026</b> (full-year 2025 results) · Litigation and policy status as of <b>25 September 2026</b></p>
+  <nav class="toc">
+    <a href="#business">01 Business</a><a href="#history">02 How it got here</a><a href="#products">03 Products</a><a href="#regions">04 Regions</a>
+    <a href="#engines">05 Two engines</a><a href="#moat">06 The moat</a><a href="#peers">07 Competition</a><a href="#finance">08 Financial strength</a>
+    <a href="#underhood">09 Under the hood</a><a href="#capital">10 Capital</a><a href="#risks">11 Business risks</a><a href="#watch">12 What to watch</a>
+  </nav>
+</header>
+
+<section id="business">
+  <h2><span class="num">01</span>The business in thirty seconds</h2>
+  <p class="asof">Data as of <b>29 Jul 2026</b> · FY2025 universal registration document</p>
+  <div class="panels">
+    <div class="panel"><div class="label">What it does</div><p>Designs, manufactures — mostly in France, largely by hand — and sells luxury objects: leather bags and saddlery, clothing and accessories, silk, jewellery, homeware, watches and perfume.</p></div>
+    <div class="panel"><div class="label">How it makes money</div><p>Selling at full price through its own network: 234 of its 294 exclusive stores are company-operated and generate 92% of retail revenue, alongside its own e-commerce. No discount sales.</p></div>
+    <div class="panel"><div class="label">Products that matter</div><p>Leather Goods &amp; Saddlery is 46% of revenue. Ready-to-wear &amp; Accessories is 27%. Everything else — silk, jewellery, home, watches, perfume, other brands — is the remaining 27%.</p></div>
+    <div class="panel"><div class="label">Where it operates</div><p>45 countries. Asia-Pacific excluding Japan is 43% of revenue, the Americas 19%, Europe excluding France 14%, Japan 10%, France 9%, Middle East and other 4%.</p></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">€8,163m</div><div class="l">Revenue, H1 2026 (+6.1% at constant exchange rates)</div></div>
+    <div class="kpi"><div class="v">41.0%</div><div class="l">Recurring operating margin, H1 2026</div></div>
+    <div class="kpi"><div class="v">€12,926m</div><div class="l">Restated net cash, 30 June 2026</div></div>
+    <div class="kpi"><div class="v">27,107</div><div class="l">Employees, of whom 16,656 in France</div></div>
+  </div>
+</section>
+
+<section id="history">
+  <h2><span class="num">02</span>How it got here</h2>
+  <p class="asof">Data as of <b>12 Feb 2026</b> (FY2025) and <b>29 Jul 2026</b> (H1 2026)</p>
+  <p>Hermès was founded in Paris in <strong>1837</strong>. Its saddlery origins survive in the name of its largest division, <em>Leather Goods &amp; Saddlery</em>. It is still controlled by the founding family through an unusual legal form, a <strong>partnership limited by shares</strong> (<em>société en commandite par actions</em>): the general partner, Émile Hermès SAS, is family-owned and by statute receives 0.67% of distributable profits.</p>
+  <p>Over the last five years revenue went from €9.0 billion to €16.0 billion. The pace of growth, measured at constant exchange rates, has come down every year since 2022:</p>
+  <div class="timeline">
+    <div><div class="y">2022</div><div class="g">+23%</div></div>
+    <div><div class="y">2023</div><div class="g">+21%</div></div>
+    <div><div class="y">2024</div><div class="g">+15%</div></div>
+    <div><div class="y">2025</div><div class="g">+8.9%</div></div>
+    <div class="last"><div class="y">H1 2026</div><div class="g">+6.1%</div></div>
+  </div>
+  <p class="note">Revenue growth at constant exchange rates, as reported by the company. 2021 was +42%, a post-pandemic rebound. At current exchange rates, H1 2026 grew +1.6%: currency movements cut more than €360 million from reported revenue in the half.</p>
+</section>
+
+<section id="products">
+  <h2><span class="num">03</span>Products — the sixteen métiers, grouped</h2>
+  <p class="asof">Data as of <b>29 Jul 2026</b> · H1 2026 press release</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Division (company names)</th><th>H1 2026 €m</th><th>Share</th><th>Growth H1*</th><th>Growth Q2*</th><th>FY2025*</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Leather Goods &amp; Saddlery</td><td>3,761</td><td>46.1%</td><td>+9.8%</td><td>+10.2%</td><td>+13.1%</td></tr>
+      <tr><td>Ready-to-wear &amp; Accessories</td><td>2,198</td><td>26.9%</td><td>+2.0%</td><td>+3.6%</td><td>+6.1%</td></tr>
+      <tr><td>Other Hermès sectors (jewellery, home)</td><td>1,065</td><td>13.0%</td><td>+5.4%</td><td>+4.0%</td><td>+11.2%</td></tr>
+      <tr><td>Silk &amp; Textiles</td><td>469</td><td>5.7%</td><td>+9.7%</td><td>+12.2%</td><td>+4.7%</td></tr>
+      <tr><td>Watches</td><td>269</td><td>3.3%</td><td>+0.2%</td><td>+4.4%</td><td class="neg">−1.5%</td></tr>
+      <tr><td>Perfume &amp; Beauty</td><td>233</td><td>2.9%</td><td class="neg">−4.5%</td><td class="neg">−9.5%</td><td class="neg">−7.6%</td></tr>
+      <tr><td>Other products (John Lobb, Saint-Louis, Puiforcat, tanneries)</td><td>168</td><td>2.1%</td><td>+2.8%</td><td>+1.9%</td><td>+5.5%</td></tr>
+      <tr class="total"><td>Group</td><td>8,163</td><td>100%</td><td>+6.1%</td><td>+6.7%</td><td>+8.9%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">* At constant exchange rates. Source: Hermès H1 2026 press release (29 Jul 2026) and FY2025 results (12 Feb 2026).</p>
+</section>
+
+<section id="regions">
+  <h2><span class="num">04</span>Regions — where the customers are</h2>
+  <p class="asof">Data as of <b>29 Jul 2026</b> · revenue by destination</p>
+  <div class="bars">
+    <div class="bar-row"><span class="n">Asia-Pacific excl. Japan</span><div class="bar-track"><div class="bar-fill gold" style="width:100%"></div></div><span class="v">43.3%</span></div>
+    <div class="bar-row"><span class="n">Americas</span><div class="bar-track"><div class="bar-fill" style="width:44.9%"></div></div><span class="v">19.4%</span></div>
+    <div class="bar-row"><span class="n">Europe excl. France</span><div class="bar-track"><div class="bar-fill" style="width:33.0%"></div></div><span class="v">14.3%</span></div>
+    <div class="bar-row"><span class="n">Japan</span><div class="bar-track"><div class="bar-fill" style="width:22.6%"></div></div><span class="v">9.8%</span></div>
+    <div class="bar-row"><span class="n">France</span><div class="bar-track"><div class="bar-fill" style="width:21.3%"></div></div><span class="v">9.2%</span></div>
+    <div class="bar-row"><span class="n">Other (Middle East)</span><div class="bar-track"><div class="bar-fill" style="width:9.3%"></div></div><span class="v">4.0%</span></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Region</th><th>H1 2026 €m</th><th>Growth H1*</th><th>Growth Q2*</th><th>FY2025*</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Asia-Pacific excl. Japan</td><td>3,533</td><td>+2.4%</td><td>+2.5%</td><td>+4.9%</td></tr>
+      <tr><td>Americas</td><td>1,585</td><td>+15.3%</td><td>+13.7%</td><td>+12.4%</td></tr>
+      <tr><td>Europe excl. France</td><td>1,165</td><td>+8.8%</td><td>+8.3%</td><td>+11.3%</td></tr>
+      <tr><td>Japan</td><td>798</td><td>+11.0%</td><td>+12.3%</td><td>+14.1%</td></tr>
+      <tr><td>France</td><td>753</td><td>+1.8%</td><td>+6.2%</td><td>+8.9%</td></tr>
+      <tr><td>Other (Middle East)</td><td>330</td><td class="neg">−4.2%</td><td class="neg">−2.4%</td><td>+14.9%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">* At constant exchange rates. The largest region is also the slowest-growing one. Management stated on the H1 call that it sees no change in trend in the Americas, Japan, Korea and Europe — China was not on that list.</p>
+  <div class="callout"><p><strong>Market context, not company data.</strong> Bain estimates the global personal luxury goods market at €358 billion in 2025, <strong>+1%</strong> at constant exchange rates (June 2026). Market-research data reported by Bloomberg (20 Aug 2026) shows sales of the 25 largest luxury brands in China down more than 10% in July 2026, with Hermès among the brands in decline that month. These figures come from third-party research firms, not from Hermès.</p></div>
+</section>
+
+<section id="engines">
+  <h2><span class="num">05</span>Two engines, running at different speeds</h2>
+  <p class="asof">Data as of <b>29 Jul 2026</b> · growth at constant exchange rates, H1 2026</p>
+  <div class="split">
+    <div class="engine"><h4>Leather Goods &amp; Saddlery · 46%</h4><div class="big">+9.8%</div><div class="cap">Accelerating to +10.2% in Q2. Volume is capped by workshop capacity; the company says what it produces is sold.</div></div>
+    <div class="engine b"><h4>Everything else · 54%</h4><div class="big">≈ +3%</div><div class="cap">Ready-to-wear, silk, jewellery, home, watches, perfume and other brands, taken together.</div></div>
+  </div>
+  <p>The group grew by about €490 million at constant exchange rates in the half. About €351 million of that came from leather goods. The other divisions, on a base of about €4.5 billion, grew roughly 3%. Weighted: 0.46 × ~10% + 0.54 × ~3% ≈ 6% — which is the group's reported growth.</p>
+  <p class="note">The leather / non-leather split is calculated from the company's reported divisional figures; Hermès does not publish it in this form.</p>
+  <p><strong>Price and volume.</strong> For leather goods in 2026, management described the mix as price increases of a "mid-single digit" plus roughly 6% volume. On the H1 results call, the CFO said price increases in 2027 will be "slightly lower" than in 2026.</p>
+</section>
+
+<section id="moat">
+  <h2><span class="num">06</span>The moat — limited by people and leather, not by money</h2>
+  <p class="asof">Data as of <b>29 Jul 2026</b> · H1 press release and results call</p>
+  <ul class="plain">
+    <li><strong>Hand-made capacity.</strong> Management said on the H1 call that a bag takes around 15 hours of hand-stitching. Craftspeople are trained in-house.</li>
+    <li><strong>One new workshop a year.</strong> 25 leather workshops in France; the 25th opened in Loupes in April 2026. Next: Charleville-Mézières (2027), Colombelles (2028), Les Andelys (by 2030).</li>
+    <li><strong>Raw material.</strong> Management names the quality of hides as the bottleneck; the group owns tanneries to secure it.</li>
+    <li><strong>Demand above supply.</strong> "Everything we produce has been sold" — management, H1 2026 call.</li>
+    <li><strong>Own distribution, full price.</strong> 92% of retail revenue through company-operated stores; no sales periods.</li>
+    <li><strong>Gross margin 71.1%</strong> in H1 2026, with about half of its costs incurred in France.</li>
+  </ul>
+</section>
+
+<section id="peers">
+  <h2><span class="num">07</span>Competition — same half-year, side by side</h2>
+  <p class="asof">Data as of each company's report, <b>22–30 Jul 2026</b> unless stated</p>
+  <div class="tbl"><table class="peers">
+    <thead><tr><th>Company (period)</th><th>Organic / constant growth</th><th>Operating margin</th><th>Margin basis</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Hermès (H1 2026)</td><td>+6.1% (leather +9.8%)</td><td>41.0%</td><td>recurring, company</td></tr>
+      <tr><td>LVMH — Fashion &amp; Leather Goods (H1 2026)</td><td class="neg">−1%</td><td>≈ 34%</td><td>recurring, calculated from segment data</td></tr>
+      <tr><td>Kering — Gucci (H1 2026)</td><td class="neg">−5%</td><td>17.0%</td><td>recurring, company</td></tr>
+      <tr><td>Prada Group (H1 2026)</td><td>+5% organic</td><td>17.4%</td><td>adjusted EBIT</td></tr>
+      <tr><td>Richemont — Jewellery Maisons (FY to Mar 2026)</td><td>+14% (Apr–Jun 2026: +24%)</td><td>30.5%</td><td>segment operating, full year</td></tr>
+      <tr><td>Brunello Cucinelli (H1 2026)</td><td>+13.3%</td><td>17.1%</td><td>reported EBIT</td></tr>
+      <tr><td>Moncler Group (H1 2026)</td><td>+9%</td><td>19.0%</td><td>reported EBIT</td></tr>
+      <tr><td>Chanel (FY2025, private)</td><td>+1.8%</td><td>≈ 24%</td><td>calculated from published totals</td></tr>
+      <tr><td>Global luxury market (Bain, 2025)</td><td>+1%</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Each margin is on the basis that company publishes — this is an order-of-magnitude comparison, not a like-for-like one to the decimal. Sources: company H1 releases (22–30 Jul 2026), Richemont results (22 May 2026), press reports for Chanel, Bain (Jun 2026).</p>
+  <p>Two things are visible. Against the largest leather-goods competitors (LVMH's Fashion &amp; Leather Goods, which includes Louis Vuitton and Dior, and Gucci), Hermès grew while they shrank, and kept a higher margin. The companies growing faster than Hermès sell something else — Richemont's jewellery (Cartier, Van Cleef &amp; Arpels), Cucinelli's knitwear, Moncler's outerwear — and all of them report lower margins.</p>
+</section>
+
+<section id="finance">
+  <h2><span class="num">08</span>Financial strength</h2>
+  <p class="asof">Data as of <b>12 Feb 2026</b> (FY) and <b>29 Jul 2026</b> (H1) · € millions</p>
+  <div class="tbl"><table>
+    <thead><tr><th>€m</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>H1 25</th><th>H1 26</th></tr></thead>
+    <tbody>
+      <tr><td>Revenue</td><td>8,982</td><td>11,602</td><td>13,427</td><td>15,170</td><td>16,002</td><td>8,034</td><td>8,163</td></tr>
+      <tr><td>Growth, constant FX</td><td>+42%</td><td>+23%</td><td>+21%</td><td>+15%</td><td>+8.9%</td><td>+8.1%</td><td>+6.1%</td></tr>
+      <tr><td>Gross margin</td><td>—</td><td>—</td><td>72.3%</td><td>70.3%</td><td>71.1%</td><td>70.7%</td><td>71.1%</td></tr>
+      <tr class="hl"><td>Recurring operating margin</td><td>39.3%</td><td>40.5%</td><td>42.1%</td><td>40.5%</td><td>41.0%</td><td>41.4%</td><td>41.0%</td></tr>
+      <tr><td>Net profit, group share</td><td>2,445</td><td>3,367</td><td>4,311</td><td>4,603</td><td>4,524</td><td>2,246</td><td>2,238</td></tr>
+      <tr><td>Operating investment</td><td>532</td><td>518</td><td>859</td><td>1,067</td><td>1,161</td><td>316</td><td>344</td></tr>
+      <tr><td>Adjusted free cash flow (after leases)</td><td>2,661</td><td>3,404</td><td>3,192</td><td>3,767</td><td>3,880</td><td>1,847</td><td>2,182</td></tr>
+      <tr><td>Restated net cash</td><td>7,070</td><td>9,742</td><td>11,164</td><td>12,039</td><td>12,773</td><td>10,723</td><td>12,926</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Source: Hermès annual reports and results releases. "—" = not available in the source used for this report.</p>
+  <p><strong>Debt:</strong> borrowings of €5 million; lease liabilities of €2,279 million. Restated net cash of €12.9 billion equals about 80% of a full year of revenue. <strong>Audit:</strong> PwC (since 2011) and Grant Thornton (since 1999); the 2026 half-year review reported no matters to report; the FY2025 accounts carry no restatement.</p>
+</section>
+
+<section id="underhood">
+  <h2><span class="num">09</span>Under the hood — three details the headlines skip</h2>
+  <p class="asof">Data as of <b>29 Jul 2026</b> · half-year financial report, notes 1.2 and 4.5.2</p>
+
+  <h3>1 · The half-year cash was helped by tax not yet paid</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>€m</th><th>H1 2025</th><th>H1 2026</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>Cash generated before working capital</td><td>2,733</td><td>2,694</td><td class="neg">−1.4%</td></tr>
+      <tr><td>Change in working capital</td><td>−403</td><td>+6</td><td>+409</td></tr>
+      <tr><td>… of which inventory</td><td>−21</td><td>−99</td><td class="neg">worse</td></tr>
+      <tr><td>… of which "other" (mainly tax and staff payables)</td><td>−206</td><td>+193</td><td>+399</td></tr>
+      <tr><td>Adjusted free cash flow (published)</td><td>1,847</td><td>2,182</td><td class="pos">+18.1%</td></tr>
+      <tr class="hl"><td>Adjusted free cash flow excluding working capital</td><td>2,250</td><td>2,177</td><td class="neg">−3.2%</td></tr>
+    </tbody>
+  </table></div>
+  <p>The current tax liability rose from €452 million to €787 million in six months, because the 2025 portion of France's exceptional corporate tax contribution was booked in the half and is paid later. It is a timing effect that reverses. The inventory line consumed more cash than a year earlier, not less.</p>
+
+  <h3>2 · Inventory is growing faster than sales, with more of it written down</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>€m</th><th>Dec 2023</th><th>Dec 2024</th><th>Dec 2025</th><th>Jun 2026</th></tr></thead>
+    <tbody>
+      <tr><td>Gross inventory</td><td>3,271</td><td>4,014</td><td>4,004</td><td>4,240</td></tr>
+      <tr><td>Write-down provision</td><td>856</td><td>1,217</td><td>1,429</td><td>1,536</td></tr>
+      <tr class="hl"><td>Provision as % of gross</td><td>26.2%</td><td>30.3%</td><td>35.7%</td><td>36.2%</td></tr>
+      <tr><td>Days of inventory (gross / cost of sales)</td><td>320</td><td>324</td><td>316</td><td>334</td></tr>
+    </tbody>
+  </table></div>
+  <p>Gross inventory rose 22.7% in 2024 against revenue growth of 13.0%, and 29.6% since the end of 2023 against 20.1% for trailing revenue. The share of inventory written down went from about a quarter to more than a third. Inventory valuation is a key audit matter in both years; the company does not explain the rise in the provision.</p>
+
+  <h3>3 · The tax rate went up, not the business costs</h3>
+  <p>Effective tax rate: 28.7% (2024) → 33.4% (2025) → 35.4% (H1 2026). The whole difference is France's exceptional contribution (41.2% surcharge on corporate income tax), about €360 million in 2026, of which €270 million in the first half. Without it, 2025 net profit would have grown about 5% instead of falling 1.7%.</p>
+</section>
+
+<section id="capital">
+  <h2><span class="num">10</span>Capital — shares, buybacks, dividends</h2>
+  <p class="asof">Data as of <b>30 Jun 2026</b></p>
+  <ul class="plain">
+    <li><strong>Share count unchanged:</strong> 105,569,412 shares issued at the end of 2024, 2025 and June 2026. No dilution, no shrinkage.</li>
+    <li><strong>Buybacks are for employees:</strong> €160 million in H1 2026, allocated to employee share plans. They offset the plans; they do not reduce the share count. Share-based pay: €132 million in 2025 (0.8% of revenue); free shares go to all employees.</li>
+    <li><strong>Dividends:</strong> €18 per share on 2025 (€1,924 million paid in H1 2026). The dividend on 2024 included a €10 exceptional amount.</li>
+    <li><strong>Cash retained:</strong> €12.9 billion of restated net cash, no meaningful debt.</li>
+    <li><strong>Insider filings (AMF):</strong> members of the Dumas family, including one member of the Supervisory Board, filed share purchases between June and September 2026. No insider sales filed since 16 September 2025.</li>
+  </ul>
+</section>
+
+<section id="risks">
+  <h2><span class="num">11</span>Business risks</h2>
+  <p class="asof">Status as of <b>25 Sep 2026</b></p>
+  <div class="risk"><span class="tag">Demand</span><h4>The slowdown is in the largest region and in more than half of the product range</h4><p>Growth at constant exchange rates has fallen from 21% (2023) to 6.1% (H1 2026). Asia-Pacific excluding Japan, 43% of revenue, grew 2.4%. The non-leather divisions, 54% of revenue, grew about 3%. Third-party data for July 2026 shows Hermès sales in China declining. Management says purchases by its clients follow real-estate and equity markets more than GDP.</p></div>
+  <div class="risk"><span class="tag">Pricing</span><h4>Smaller price increases in 2027</h4><p>Management has said 2027 price increases will be slightly lower than 2026. Price is one of the two drivers of leather growth; the other, volume, is capped by capacity.</p></div>
+  <div class="risk"><span class="tag">Inventory</span><h4>Stock growing faster than sales, with a rising write-down share</h4><p>Provision up from 26.2% to 36.2% of gross inventory since the end of 2023, without explanation from the company.</p></div>
+  <div class="risk"><span class="tag">Tax</span><h4>France's "exceptional" contribution keeps being renewed</h4><p>Introduced for 2025, renewed for 2026 at the same rate, and confirmed by the finance minister on 24 Aug 2026 for the 2027 budget, "preferably" at a lower rate. About €360 million in 2026, roughly 7% of profit. In its own risk map, Hermès raised tax risk from "possible" to "very possible".</p></div>
+  <div class="risk"><span class="tag">Currency &amp; trade</span><h4>Reported numbers exposed to exchange rates and tariffs</h4><p>More than €360 million of revenue lost to currency in H1 2026; hedging costs of about €210 million for the year. US tariffs on EU goods: sources differ between a 15% all-in ceiling (European Commission) and 10% under Section 301 since 24 Jul 2026. Americas revenue grew 15.3% in H1.</p></div>
+  <div class="risk"><span class="tag">Regional</span><h4>Middle East</h4><p>Revenue down 4.2% in H1 2026, which management said took about 1.5 points off group growth, with gradual recovery in Q2.</p></div>
+  <div class="risk"><span class="tag">Litigation</span><h4>US antitrust case on Birkin bag sales</h4><p>The class action (Cavalleri et al., N.D. Cal. 3:24-cv-01707), alleging Birkin bags were sold only to clients who bought other items, was dismissed with prejudice on 17 Sep 2025 after a third attempt. The appeal (9th Circuit, No. 25-6587) is fully briefed, with no oral argument scheduled and no decision as of 25 Sep 2026. Hermès reports no proceedings with a significant impact.</p></div>
+  <div class="risk"><span class="tag">Governance</span><h4>Family control and related parties</h4><p>Partnership limited by shares, controlled by the family. Related-party contracts are disclosed and small relative to revenue — e.g. store design studio RDAI (€20 million in 2025) and leases on rue du Faubourg Saint-Honoré — but awarded to family-linked entities without tender.</p></div>
+  <div class="callout"><p><strong>What changed in the company's own risk disclosure</strong> (FY2025 vs FY2024 universal registration document): tax risk and image &amp; reputation risk moved up from "possible" to "very possible"; fraud impact moved up from "limited" to "significant". A sentence stating that a severe external crisis "would be even more unfavourable" in Asia was removed — in the year Asia-Pacific excluding Japan became the slowest region.</p></div>
+</section>
+
+<section id="watch">
+  <h2><span class="num">12</span>What to watch</h2>
+  <div class="tbl"><table class="text">
+    <thead><tr><th>Date</th><th>Event</th><th>What it will show</th></tr></thead>
+    <tbody>
+      <tr><td>22 Oct 2026</td><td>Q3 2026 revenue</td><td>Whether leather keeps growing near 10%, and whether Asia-Pacific excl. Japan stays positive</td></tr>
+      <tr><td>2027 budget</td><td>French finance law</td><td>Rate and duration of the exceptional tax contribution</td></tr>
+      <tr><td>11 Feb 2027</td><td>FY2026 results</td><td>Full-year margin, H2 cash flow without the tax timing effect, inventory provision</td></tr>
+      <tr><td>Open</td><td>9th Circuit, No. 25-6587</td><td>Outcome of the Birkin antitrust appeal</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<div class="strip">No fair value · No price target · No re-entry price</div>
+
+<div class="disclaimer">
+  <p class="pos-line">"I hold no position in anything I cover here, and I take none for at least ninety days after publishing."</p>
+  <p>This report is educational content about a business. It is not investment advice, not a recommendation to buy or sell any security, and not a price call. Investing involves risk, including the loss of capital. The author is not a licensed financial adviser. Do your own due diligence.</p>
+  <p>Company figures: data as of 29 July 2026 (H1 2026) and 12 February 2026 (FY2025). Market, litigation and policy items: as of the dates stated in each section, latest 25 September 2026.</p>
+</div>
+
+<div class="sources">
+  <h3>Sources</h3>
+  <ol>
+    <li>Hermès International — H1 2026 press release and half-year financial report (29 Jul 2026). <a href="https://finance.hermes.com">finance.hermes.com</a></li>
+    <li>Hermès International — FY2025 results (12 Feb 2026) and 2025 / 2024 Universal Registration Documents.</li>
+    <li>Hermès H1 2026 results call, 29 Jul 2026 (transcript, Investing.com).</li>
+    <li>LVMH, Kering, Prada, Brunello Cucinelli, Moncler — H1 2026 releases (22–30 Jul 2026); Richemont FY results (22 May 2026); press reports on Chanel FY2025.</li>
+    <li>Bain &amp; Company, luxury market study (25 Jun 2026).</li>
+    <li>Bloomberg (20 Aug 2026), Business Standard, FashionNetwork, The Star — China luxury sales, July 2026 (third-party market research).</li>
+    <li>CourtListener — Cavalleri v. Hermès, N.D. Cal. 3:24-cv-01707; 9th Cir. No. 25-6587.</li>
+    <li>AMF / BDIF — insider transaction filings, Jun–Sep 2026.</li>
+  </ol>
+</div>
+
+<footer><b>The Exclusion Filter</b> — Due Diligence Before Price</footer>
+
+</div>
+</body>
+</html>
