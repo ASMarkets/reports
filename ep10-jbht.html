@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J.B. Hunt Transport Services (JBHT) | The Deep Dive Report | The Exclusion Filter</title>
+<meta name="description" content="J.B. Hunt Transport Services — business, segments, competition, financial strength and business risks. Company data only. No price targets, no position.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0E1217; --navy-2:#151b23; --navy-3:#1b222c;
+    --gold:#C9A24A; --cream:#E9E0CC; --slate:#495564; --slate-2:#7d8795;
+    --bad:#B4553F; --good:#5F9E79;
+    --line:rgba(233,224,204,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--navy);color:var(--cream);}
+  body{font-family:'DM Sans',sans-serif;line-height:1.62;font-size:16px;-webkit-font-smoothing:antialiased;}
+  .glow{position:fixed;top:-10%;left:50%;transform:translateX(-50%);width:900px;max-width:100vw;height:600px;border-radius:50%;
+    background:radial-gradient(ellipse at center,rgba(201,162,74,0.10),transparent 70%);pointer-events:none;z-index:0;}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 20px 80px;position:relative;z-index:1;}
+  .imprint{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;margin-bottom:32px;opacity:.85;}
+  header.hero{margin-bottom:36px;border-bottom:1px solid var(--line);padding-bottom:30px;}
+  .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-2);margin-bottom:14px;}
+  .kicker b{color:var(--gold);font-weight:600;}
+  h1{font-family:'Source Serif 4',serif;font-weight:700;font-size:2.5rem;line-height:1.1;margin:0 0 10px;color:#fff;}
+  h1 .ticker{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--gold);font-weight:600;display:block;margin-bottom:8px;letter-spacing:.04em;}
+  .subhead{font-size:1.06rem;color:var(--cream);opacity:.8;max-width:660px;margin:0;}
+  .stamp{display:inline-block;margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gold);border:1px solid rgba(201,162,74,.45);padding:8px 14px;border-radius:3px;background:rgba(201,162,74,.07);}
+  .asof{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--slate-2);letter-spacing:.06em;text-transform:uppercase;margin:6px 0 16px;}
+  .asof b{color:var(--cream);font-weight:500;}
+  nav.toc{display:flex;flex-wrap:wrap;gap:6px 14px;margin:18px 0 0;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
+  nav.toc a{color:var(--slate-2);text-decoration:none;border-bottom:1px dotted var(--slate);}
+  nav.toc a:hover{color:var(--gold);}
+  section{margin:48px 0;}
+  h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:1.35rem;color:#fff;margin:0 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+  h2 .num{color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.85rem;margin-right:10px;}
+  h3{font-family:'DM Sans',sans-serif;font-size:1rem;color:#fff;margin:26px 0 8px;font-weight:700;}
+  p{margin:0 0 14px;opacity:.93;}
+  strong{color:#fff;}
+  .panels{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .panel{background:var(--navy-2);padding:18px 20px;}
+  .panel .label{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .panel p{margin:0;font-size:.95rem;}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .kpi{background:var(--navy-2);padding:14px 16px;}
+  .kpi .v{font-family:'IBM Plex Mono',monospace;font-size:1.25rem;color:#fff;font-weight:600;}
+  .kpi .l{font-size:.78rem;color:var(--slate-2);line-height:1.35;margin-top:4px;}
+  .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:520px;}
+  th,td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  th:first-child,td:first-child{text-align:left;white-space:normal;}
+  th{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--slate-2);font-weight:500;}
+  td{font-family:'IBM Plex Mono',monospace;color:var(--cream);}
+  td:first-child{font-family:'DM Sans',sans-serif;font-weight:500;}
+  tr.hl td{color:var(--gold);font-weight:600;}
+  table.peers td:first-child{min-width:250px;}
+  table.text th,table.text td{text-align:left;white-space:normal;font-family:'DM Sans',sans-serif;}
+  table.text td:first-child{font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+  table.peers td:last-child,table.peers th:last-child{white-space:normal;text-align:left;font-size:.78rem;color:var(--slate-2);}
+  tr.total td{border-top:1px solid rgba(233,224,204,.3);font-weight:600;}
+  .neg{color:var(--bad);} .pos{color:var(--good);}
+  .note{font-size:.8rem;color:var(--slate-2);margin:-6px 0 14px;line-height:1.5;}
+  .callout{background:rgba(201,162,74,0.06);border-left:3px solid var(--gold);padding:16px 20px;margin:20px 0;border-radius:0 4px 4px 0;}
+  .callout p{margin:0;opacity:1;}
+  .bars{margin:18px 0;}
+  .bar-row{display:grid;grid-template-columns:190px 1fr 70px;gap:12px;align-items:center;margin:8px 0;font-size:.88rem;}
+  .bar-row .n{color:var(--cream);}
+  .bar-track{height:12px;background:var(--navy-3);border-radius:2px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--slate);}
+  .bar-fill.gold{background:var(--gold);}
+  .bar-row .v{font-family:'IBM Plex Mono',monospace;text-align:right;color:var(--cream);}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+  .engine{background:var(--navy-2);border:1px solid var(--line);border-radius:4px;padding:18px 20px;}
+  .engine .big{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--gold);line-height:1;}
+  .engine.b .big{color:var(--slate-2);}
+  .engine .cap{font-size:.85rem;color:var(--slate-2);margin-top:8px;}
+  .engine h4{margin:0 0 10px;font-size:.78rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--cream);}
+  .risk{border:1px solid var(--line);border-radius:4px;background:var(--navy-2);padding:16px 18px;margin:12px 0;}
+  .risk h4{margin:0 0 6px;font-size:1rem;color:#fff;}
+  .risk .tag{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bad);margin-bottom:6px;display:block;}
+  .risk p{margin:0;font-size:.93rem;}
+  ul.plain{margin:0 0 14px;padding-left:18px;} ul.plain li{margin:4px 0;}
+  .strip{margin-top:56px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;}
+  .disclaimer{margin-top:28px;background:var(--navy-2);border:1px solid var(--line);border-radius:4px;padding:20px 22px;font-size:.88rem;}
+  .disclaimer p{margin:0 0 10px;}
+  .disclaimer .pos-line{font-family:'Source Serif 4',serif;font-style:italic;font-size:1.02rem;color:#fff;}
+  .sources{margin-top:28px;font-size:.8rem;color:var(--slate-2);}
+  .sources h3{font-size:.78rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-2);}
+  .sources ol{padding-left:18px;margin:0;} .sources li{margin:4px 0;}
+  .sources a{color:var(--slate-2);}
+  footer{margin-top:40px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-2);}
+  footer b{color:var(--gold);font-weight:600;}
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px;}
+    h1{font-size:1.9rem;}
+    .panels,.split{grid-template-columns:1fr;}
+    .kpis{grid-template-columns:repeat(2,1fr);}
+    .bar-row{grid-template-columns:120px 1fr 56px;font-size:.8rem;}
+    table.peers td:first-child{min-width:170px;}
+  }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+<div class="imprint">The Exclusion Filter · The Deep Dive · Episode 10</div>
+
+<header class="hero">
+  <div class="kicker"><b>Company report</b> · Transportation &amp; logistics · NASDAQ</div>
+  <h1><span class="ticker">NASDAQ: JBHT</span>J.B. Hunt Transport Services</h1>
+  <p class="subhead">An American freight company. Its largest business puts customers' loads into its own containers and moves them by rail, with its own trucks at each end; its second puts trucks and drivers at the service of a single customer. What it does, where the profit comes from, how it compares with its peers, and what the latest reports show about its strength and its risks.</p>
+  <div class="stamp">No price targets · No position</div>
+  <p class="asof" style="margin-top:14px">Data as of <b>15 July 2026</b> (second-quarter 2026 results) and <b>24 February 2026</b> (full-year 2025 10-K) · Management statement as of <b>16 September 2026</b> · Calendar as of <b>1 October 2026</b></p>
+  <nav class="toc">
+    <a href="#business">01 Business</a><a href="#history">02 How it got here</a><a href="#segments">03 Segments</a><a href="#engines">04 Two engines</a>
+    <a href="#moat">05 The moat</a><a href="#peers">06 Competition</a><a href="#finance">07 Financial strength</a><a href="#underhood">08 Under the hood</a>
+    <a href="#risks">09 Business risks</a><a href="#watch">10 What to watch</a>
+  </nav>
+</header>
+
+<section id="business">
+  <h2><span class="num">01</span>The business in thirty seconds</h2>
+  <p class="asof">Data as of <b>24 Feb 2026</b> · FY2025 10-K · segment revenue shares</p>
+  <div class="panels">
+    <div class="panel"><div class="label">What it does</div><p>Moves freight across the United States. In its largest business, a customer's load goes into one of the company's own 53-foot containers, a railroad carries it for the long haul, and the company's own trucks handle the pick-up and the delivery.</p></div>
+    <div class="panel"><div class="label">How it makes money</div><p>A price per load in intermodal. In dedicated trucking, contracts of three to ten years (about five on average), priced cost-plus: fixed costs are recovered whether or not the equipment is fully used. Brokerage earns the margin between what shippers pay and what carriers charge.</p></div>
+    <div class="panel"><div class="label">Products that matter</div><p>Intermodal (JBI) is 50% of 2025 segment revenue; Dedicated (DCS) 28%; Integrated Capacity Solutions, the brokerage (ICS), 9%; Final Mile (FMS), 7%; Truckload (JBT), 6%.</p></div>
+    <div class="panel"><div class="label">Where it operates</div><p>The United States. The company states that international operations are "not material" to its financial position, results or cash flows.</p></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">$3.50bn</div><div class="l">Revenue, Q2 2026 (+19%)</div></div>
+    <div class="kpi"><div class="v">$259.5m</div><div class="l">Operating income, Q2 2026 (+32%)</div></div>
+    <div class="kpi"><div class="v">$1.91</div><div class="l">Diluted earnings per share, Q2 2026 (Q2 2025: $1.31)</div></div>
+    <div class="kpi"><div class="v">31,750</div><div class="l">Employees at 31 Dec 2025</div></div>
+  </div>
+</section>
+
+<section id="history">
+  <h2><span class="num">02</span>How it got here</h2>
+  <p class="asof">Data as of <b>24 Feb 2026</b> · FY2025 10-K</p>
+  <p>J.B. Hunt was incorporated in Arkansas on <strong>10 August 1961</strong> and is headquartered in Lowell, Arkansas. Its intermodal segment began operations in <strong>1989</strong>, forming a partnership with what is now the BNSF Railway. Intermodal is still its largest segment.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>2024</th><th>2025</th></tr></thead>
+    <tbody>
+      <tr><td>Total operating revenue</td><td>$12.09bn</td><td>$12.00bn</td></tr>
+      <tr class="hl"><td>Operating income</td><td>$831m</td><td>$865m</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Source: FY2025 10-K. Revenue was about flat; operating income rose.</p>
+</section>
+
+<section id="segments">
+  <h2><span class="num">03</span>Segments — the five businesses</h2>
+  <p class="asof">Data as of <b>24 Feb 2026</b> (FY2025) and <b>15 Jul 2026</b> (Q2 2026)</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Segment (company names)</th><th>2025 revenue $m</th><th>Share of segments</th><th>2025 op. income $m</th><th>Q2 26 revenue</th><th>Q2 26 op. income $m</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Intermodal (JBI)</td><td>5,975</td><td>49.7%</td><td>450</td><td>$1.75bn (+22%)</td><td>150.9 (+58%)</td></tr>
+      <tr class="hl"><td>Dedicated Contract Services (DCS)</td><td>3,376</td><td>28.1%</td><td>377</td><td>$921m (+9%)</td><td>102.5 (+9%)</td></tr>
+      <tr><td>Integrated Capacity Solutions (ICS)</td><td>1,109</td><td>9.2%</td><td class="neg">−10</td><td>$388m (+49%)</td><td>1.7 (Q2 25: −3.6)</td></tr>
+      <tr><td>Final Mile Services (FMS)</td><td>824</td><td>6.9%</td><td>27</td><td>$198m (−6%)</td><td>5.6 (−30%)</td></tr>
+      <tr><td>Truckload (JBT)</td><td>734</td><td>6.1%</td><td>21</td><td>$240m (+35%)</td><td class="neg">−1.3 (Q2 25: +3.4)</td></tr>
+      <tr class="total"><td>Total</td><td>12,018*</td><td>100%</td><td>865</td><td>$3.50bn (+19%)</td><td>259.5 (+32%)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">* Sum of segments as shown in the 10-K; consolidated revenue is $12.00bn after eliminations. Source: FY2025 10-K and Q2 2026 earnings release (15 Jul 2026). Final Mile delivers "big and bulky" goods; ICS is a freight brokerage with an online marketplace, J.B. Hunt 360; Truckload is full-load dry-van freight.</p>
+  <p>Customers are diversified: the top ten accounted for about <strong>33%</strong> of 2025 revenue.</p>
+</section>
+
+<section id="engines">
+  <h2><span class="num">04</span>Two engines — where the profit comes from</h2>
+  <p class="asof">Data as of <b>15 Jul 2026</b> · Q2 2026 operating income by segment</p>
+  <div class="split">
+    <div class="engine"><h4>Intermodal + Dedicated · 98% of profit</h4><div class="big">$253.4m</div><div class="cap">$150.9m + $102.5m, out of $259.5m of group operating income. 76% of Q2 revenue.</div></div>
+    <div class="engine b"><h4>Brokerage + Final Mile + Truckload · 2%</h4><div class="big">$6.0m</div><div class="cap">$1.7m + $5.6m − $1.3m. About a quarter (24%) of Q2 revenue.</div></div>
+  </div>
+  <p class="note">Shares calculated from reported segment figures: 253.4 / 259.5 = 97.7%; 6.0 / 259.5 = 2.3%. Revenue: the three smaller segments, $826m of $3,495m = 23.6%.</p>
+</section>
+
+<section id="moat">
+  <h2><span class="num">05</span>The moat — assets that are physical and hard to copy</h2>
+  <p class="asof">Data as of <b>15 Jul 2026</b> (Q2 2026) and <b>24 Feb 2026</b> (FY2025 10-K)</p>
+  <ul class="plain">
+    <li><strong>Own containers and chassis.</strong> About 124,000 containers (124,199 "trailing equipment" at 30 Jun 2026; 124,838 containers at 31 Dec 2025) and 104,474 chassis at year-end 2025.</li>
+    <li><strong>Own drayage tractors.</strong> 6,232 intermodal tractors at 30 Jun 2026 to pick up and deliver at each end of the rail leg.</li>
+    <li><strong>A rail partnership since 1989.</strong> The company has agreements with several Class I railroads, but the majority of its business travels on BNSF and Norfolk Southern.</li>
+    <li><strong>Contracted base in Dedicated.</strong> Contracts run three to ten years; customer retention was about <strong>96%</strong> in Q2 2026.</li>
+    <li><strong>Operating leverage showing.</strong> In Q2 2026, intermodal loads grew 10% and intermodal operating income grew 58%, to $150.9 million.</li>
+  </ul>
+</section>
+
+<section id="peers">
+  <h2><span class="num">06</span>Competition — intermodal, same quarter</h2>
+  <p class="asof">Data as of each company's Q2 2026 report: <b>15 Jul</b> (J.B. Hunt), <b>22 Jul</b> (Knight-Swift), <b>29 Jul 2026</b> (Schneider) · Hub Group: <b>14 Sep 2026</b></p>
+  <div class="tbl"><table class="peers">
+    <thead><tr><th>Intermodal segment, Q2 2026</th><th>Volume</th><th>Operating margin</th><th>Margin basis</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>J.B. Hunt — Intermodal (JBI)</td><td>Loads +10%</td><td>8.6%</td><td>operating income / revenue including fuel surcharge (calculated)</td></tr>
+      <tr><td>Schneider — Intermodal</td><td>Orders +0.2%; revenue ex-fuel −1%</td><td>7.0%</td><td>operating ratio 93.0%, on revenue excluding fuel surcharge</td></tr>
+      <tr><td>Knight-Swift — Intermodal</td><td>Loads +19.6%; revenue +34.9%</td><td>0.6%</td><td>operating ratio 99.4%; operating income $0.65m</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">The bases differ: Schneider excludes fuel surcharge from revenue, which raises its margin relative to a revenue-including-fuel measure, so compare the direction, not the decimals. J.B. Hunt does not publish intermodal revenue excluding fuel. Margins are calculated from each company's reported operating income and revenue or operating ratio.</p>
+  <p><strong>Hub Group</strong>, another large intermodal marketer, announced on 14 September 2026 that it expects an operating loss for the first half of 2026 before one-time charges and is restating the years 2023 and 2024 and the first three quarters of 2025. Its 10-Qs for the first and second quarters of 2026 had not yet been filed; it expects to file them in the fourth quarter of 2026.</p>
+</section>
+
+<section id="finance">
+  <h2><span class="num">07</span>Financial strength</h2>
+  <p class="asof">Data as of <b>30 Jun 2026</b> · Q2 2026 release (15 Jul 2026)</p>
+  <div class="kpis">
+    <div class="kpi"><div class="v">$1.15bn</div><div class="l">Debt at 30 Jun 2026 (30 Jun 2025: $1.72bn)</div></div>
+    <div class="kpi"><div class="v">$4.2m</div><div class="l">Cash at 30 Jun 2026</div></div>
+    <div class="kpi"><div class="v">7.4%</div><div class="l">Operating margin, Q2 2026 (259.5 / 3,495.3, calculated)</div></div>
+    <div class="kpi"><div class="v">$98m</div><div class="l">Share repurchases in Q2 2026 (about 392,000 shares)</div></div>
+  </div>
+</section>
+
+<section id="underhood">
+  <h2><span class="num">08</span>Under the hood</h2>
+  <p class="asof">Data as of <b>15 Jul 2026</b> · Q2 2026 earnings release</p>
+  <h3>1. Fuel surcharge sits inside revenue</h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Q2 2025</th><th>Q2 2026</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>Total operating revenue</td><td>$2,928.2m</td><td>$3,495.3m</td><td>+19.4%</td></tr>
+      <tr><td>Fuel surcharge revenue</td><td>$351.9m</td><td>$641.5m</td><td>+82.3%</td></tr>
+      <tr class="hl"><td>Revenue excluding fuel surcharge (calculated)</td><td>$2,576.3m</td><td>$2,853.8m</td><td>+10.8%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Fuel surcharge was 12.0% of revenue a year earlier and 18.4% in Q2 2026 (calculated). Growth excluding fuel surcharge is calculated from the reported figures.</p>
+  <h3>2. Cash flow and investment, first half</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>First half, $m</th><th>2025</th><th>2026</th></tr></thead>
+    <tbody>
+      <tr><td>Operating cash flow</td><td>806.2</td><td class="neg">723.3 (−10%)</td></tr>
+      <tr><td>Net capital expenditures</td><td>399.1</td><td>144.9</td></tr>
+      <tr><td>Depreciation and amortization</td><td>356.5</td><td>360.0</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Operating cash flow fell 10% in the half while Q2 operating income rose 32%. Net spending on equipment in H1 2026 was well below depreciation.</p>
+</section>
+
+<section id="risks">
+  <h2><span class="num">09</span>Business risks</h2>
+  <p class="asof">Status as of <b>16 Sep 2026</b> (management statement), <b>19 Aug 2026</b> (regulatory calendar) and <b>15 Jul 2026</b> (results)</p>
+  <div class="risk"><span class="tag">Costs</span><h4>Costs arrive before price</h4><p>At a Morgan Stanley investor conference in mid-September 2026, management said third-quarter earnings per share would be 5% to 10% below the second quarter ($1.91), citing about $25 million of additional driver recruiting, advertising, training and onboarding costs, and at least $10 million from higher diesel prices. This statement was made at a conference; it is reported by the press and was not filed with the SEC.</p></div>
+  <div class="risk"><span class="tag">Rail dependence</span><h4>Most volume rides on two railroads, one of which may change owner</h4><p>The majority of the business travels on BNSF and Norfolk Southern. Union Pacific has proposed to acquire Norfolk Southern. The Surface Transportation Board has set final briefs for 28 May 2027 and a decision is expected in the second half of 2027. The FY2025 10-K does not mention the proposed merger.</p></div>
+  <div class="risk"><span class="tag">Mix</span><h4>Growth that earns less</h4><p>Brokerage (ICS) revenue grew 49% in Q2 2026, but its gross profit margin fell to 12.5% from 15.5%. Truckload swung to an operating loss of $1.3 million (Q2 2025: profit of $3.4 million) and Final Mile operating income fell 30%.</p></div>
+</section>
+
+<section id="watch">
+  <h2><span class="num">10</span>What to watch</h2>
+  <div class="tbl"><table class="text">
+    <thead><tr><th>Date</th><th>Event</th><th>What it will show</th></tr></thead>
+    <tbody>
+      <tr><td>15 Oct 2026</td><td>Q3 2026 results (after market close; call 4:00–5:00 p.m. CDT)</td><td>Whether intermodal operating income keeps growing, and whether the cost increases land inside what management flagged in September</td></tr>
+      <tr><td>28 May 2027</td><td>Final briefs, UP–NS merger review</td><td>Last step before the Surface Transportation Board's decision, expected in the second half of 2027</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<div class="strip">No fair value · No price target · No re-entry price</div>
+
+<div class="disclaimer">
+  <p class="pos-line">"I hold no position in anything I cover here, and I take none for at least ninety days after publishing."</p>
+  <p>This report is educational content about a business. It is not investment advice, not a recommendation to buy or sell any security, and not a price call. Investing involves risk, including the loss of capital. The author is not a licensed financial adviser. Do your own due diligence.</p>
+  <p>Company figures: data as of 15 July 2026 (Q2 2026) and 24 February 2026 (FY2025 10-K). Peer, management-statement and calendar items: as of the dates stated in each section, latest 1 October 2026.</p>
+</div>
+
+<div class="sources">
+  <h3>Sources</h3>
+  <ol>
+    <li>J.B. Hunt Transport Services — Q2 2026 earnings release (Form 8-K, exhibit 99.1), 15 Jul 2026. <a href="https://investor.jbhunt.com">investor.jbhunt.com</a></li>
+    <li>J.B. Hunt Transport Services — Form 10-K for the fiscal year ended 31 Dec 2025, filed 24 Feb 2026 (SEC EDGAR).</li>
+    <li>J.B. Hunt — announcement of Q3 2026 earnings date and conference call, Business Wire, 1 Oct 2026.</li>
+    <li>Schneider National — Q2 2026 results, 29 Jul 2026. Knight-Swift Transportation — Q2 2026 results (Form 8-K, exhibit 99.1), 22 Jul 2026.</li>
+    <li>Hub Group — select preliminary Q1 and Q2 2026 results and restatement update, 14 Sep 2026.</li>
+    <li>Management statement of mid-September 2026: Truck News and Talk Business &amp; Politics (secondary sources; not an SEC filing).</li>
+    <li>Surface Transportation Board procedural schedule for the Union Pacific–Norfolk Southern proceeding, as reported by FreightWaves (secondary source).</li>
+  </ol>
+</div>
+
+<footer><b>The Exclusion Filter</b> — Due Diligence Before Price</footer>
+
+</div>
+
+</body>
+</html>
