@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generac Holdings (GNRC) | The Deep Dive Report | The Exclusion Filter</title>
+<meta name="description" content="Generac Holdings — business, segments, data center growth, competition, financial strength and business risks. Company data only. No price targets, no position.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0E1217; --navy-2:#151b23; --navy-3:#1b222c;
+    --gold:#C9A24A; --cream:#E9E0CC; --slate:#495564; --slate-2:#7d8795;
+    --bad:#B4553F; --good:#5F9E79;
+    --line:rgba(233,224,204,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--navy);color:var(--cream);}
+  body{font-family:'DM Sans',sans-serif;line-height:1.62;font-size:16px;-webkit-font-smoothing:antialiased;}
+  .glow{position:fixed;top:-10%;left:50%;transform:translateX(-50%);width:900px;max-width:100vw;height:600px;border-radius:50%;
+    background:radial-gradient(ellipse at center,rgba(201,162,74,0.10),transparent 70%);pointer-events:none;z-index:0;}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 20px 80px;position:relative;z-index:1;}
+  .imprint{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;margin-bottom:32px;opacity:.85;}
+  header.hero{margin-bottom:36px;border-bottom:1px solid var(--line);padding-bottom:30px;}
+  .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-2);margin-bottom:14px;}
+  .kicker b{color:var(--gold);font-weight:600;}
+  h1{font-family:'Source Serif 4',serif;font-weight:700;font-size:2.5rem;line-height:1.1;margin:0 0 10px;color:#fff;}
+  h1 .ticker{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--gold);font-weight:600;display:block;margin-bottom:8px;letter-spacing:.04em;}
+  .subhead{font-size:1.06rem;color:var(--cream);opacity:.8;max-width:660px;margin:0;}
+  .stamp{display:inline-block;margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gold);border:1px solid rgba(201,162,74,.45);padding:8px 14px;border-radius:3px;background:rgba(201,162,74,.07);}
+  .asof{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--slate-2);letter-spacing:.06em;text-transform:uppercase;margin:6px 0 16px;}
+  .asof b{color:var(--cream);font-weight:500;}
+  nav.toc{display:flex;flex-wrap:wrap;gap:6px 14px;margin:18px 0 0;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
+  nav.toc a{color:var(--slate-2);text-decoration:none;border-bottom:1px dotted var(--slate);}
+  nav.toc a:hover{color:var(--gold);}
+  section{margin:48px 0;}
+  h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:1.35rem;color:#fff;margin:0 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+  h2 .num{color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.85rem;margin-right:10px;}
+  h3{font-family:'DM Sans',sans-serif;font-size:1rem;color:#fff;margin:26px 0 8px;font-weight:700;}
+  p{margin:0 0 14px;opacity:.93;}
+  strong{color:#fff;}
+  .panels{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .panel{background:var(--navy-2);padding:18px 20px;}
+  .panel .label{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .panel p{margin:0;font-size:.95rem;}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .kpi{background:var(--navy-2);padding:14px 16px;}
+  .kpi .v{font-family:'IBM Plex Mono',monospace;font-size:1.25rem;color:#fff;font-weight:600;}
+  .kpi .l{font-size:.78rem;color:var(--slate-2);line-height:1.35;margin-top:4px;}
+  .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:520px;}
+  th,td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  th:first-child,td:first-child{text-align:left;white-space:normal;}
+  th{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--slate-2);font-weight:500;}
+  td{font-family:'IBM Plex Mono',monospace;color:var(--cream);}
+  td:first-child{font-family:'DM Sans',sans-serif;font-weight:500;}
+  tr.hl td{color:var(--gold);font-weight:600;}
+  table.peers td:first-child{min-width:250px;}
+  table.text th,table.text td{text-align:left;white-space:normal;font-family:'DM Sans',sans-serif;}
+  table.text td:first-child{font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+  table.peers td:last-child,table.peers th:last-child{white-space:normal;text-align:left;font-size:.78rem;color:var(--slate-2);}
+  tr.total td{border-top:1px solid rgba(233,224,204,.3);font-weight:600;}
+  .neg{color:var(--bad);} .pos{color:var(--good);}
+  .note{font-size:.8rem;color:var(--slate-2);margin:-6px 0 14px;line-height:1.5;}
+  .callout{background:rgba(201,162,74,0.06);border-left:3px solid var(--gold);padding:16px 20px;margin:20px 0;border-radius:0 4px 4px 0;}
+  .callout p{margin:0;opacity:1;}
+  .bars{margin:18px 0;}
+  .bar-row{display:grid;grid-template-columns:190px 1fr 70px;gap:12px;align-items:center;margin:8px 0;font-size:.88rem;}
+  .bar-row .n{color:var(--cream);}
+  .bar-track{height:12px;background:var(--navy-3);border-radius:2px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--slate);}
+  .bar-fill.gold{background:var(--gold);}
+  .bar-row .v{font-family:'IBM Plex Mono',monospace;text-align:right;color:var(--cream);}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+  .engine{background:var(--navy-2);border:1px solid var(--line);border-radius:4px;padding:18px 20px;}
+  .engine .big{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--gold);line-height:1;}
+  .engine.b .big{color:var(--slate-2);}
+  .engine .cap{font-size:.85rem;color:var(--slate-2);margin-top:8px;}
+  .engine h4{margin:0 0 10px;font-size:.78rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--cream);}
+  .risk{border:1px solid var(--line);border-radius:4px;background:var(--navy-2);padding:16px 18px;margin:12px 0;}
+  .risk h4{margin:0 0 6px;font-size:1rem;color:#fff;}
+  .risk .tag{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bad);margin-bottom:6px;display:block;}
+  .risk p{margin:0;font-size:.93rem;}
+  ul.plain{margin:0 0 14px;padding-left:18px;} ul.plain li{margin:4px 0;}
+  .strip{margin-top:56px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;}
+  .disclaimer{margin-top:28px;background:var(--navy-2);border:1px solid var(--line);border-radius:4px;padding:20px 22px;font-size:.88rem;}
+  .disclaimer p{margin:0 0 10px;}
+  .disclaimer .pos-line{font-family:'Source Serif 4',serif;font-style:italic;font-size:1.02rem;color:#fff;}
+  .sources{margin-top:28px;font-size:.8rem;color:var(--slate-2);}
+  .sources h3{font-size:.78rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-2);}
+  .sources ol{padding-left:18px;margin:0;} .sources li{margin:4px 0;}
+  .sources a{color:var(--slate-2);}
+  footer{margin-top:40px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-2);}
+  footer b{color:var(--gold);font-weight:600;}
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px;}
+    h1{font-size:1.9rem;}
+    .panels,.split{grid-template-columns:1fr;}
+    .kpis{grid-template-columns:repeat(2,1fr);}
+    .bar-row{grid-template-columns:120px 1fr 56px;font-size:.8rem;}
+    table.peers td:first-child{min-width:170px;}
+  }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+<div class="imprint">The Exclusion Filter · The Deep Dive · Episode 11</div>
+
+<header class="hero">
+  <div class="kicker"><b>Company report</b> · Electrical equipment · NYSE</div>
+  <h1><span class="ticker">NYSE: GNRC</span>Generac Holdings</h1>
+  <p class="subhead">An American maker of generators and energy equipment. Its largest business sells backup power for homes; its fastest-growing one sells large generators for commercial, industrial and data center use. What it does, where the profit comes from, what is driving the growth, how it compares with larger power-equipment peers, and what the latest filings show about its strength and its risks.</p>
+  <div class="stamp">No price targets · No position</div>
+  <p class="asof" style="margin-top:14px">Data as of <b>30 June 2026</b> (second-quarter 2026 10-Q, filed 4 August) · <b>29 July 2026</b> (results release) · <b>31 December 2025</b> (FY2025 10-K and recast segments) · <b>16 September 2026</b> (supply agreement) · Calendar as of <b>8 October 2026</b></p>
+  <nav class="toc">
+    <a href="#business">01 Business</a><a href="#history">02 How it got here</a><a href="#engines">03 Two engines</a><a href="#growth">04 What drives the growth</a>
+    <a href="#peers">05 Competition</a><a href="#finance">06 Financial strength</a><a href="#underhood">07 Under the hood</a>
+    <a href="#risks">08 Business risks</a><a href="#watch">09 What to watch</a>
+  </nav>
+</header>
+
+<section id="business">
+  <h2><span class="num">01</span>The business in thirty seconds</h2>
+  <p class="asof">Data as of <b>31 Dec 2025</b> · FY2025 10-K and recast segments (8-K, 25 Mar 2026) · segment definitions from the Q2 2026 10-Q</p>
+  <div class="panels">
+    <div class="panel"><div class="label">What it does</div><p>Designs and manufactures generators, energy storage systems, energy management devices and other power products and services for residential, commercial, data center, telecom, rental and industrial markets. It sells through dealers, distributors, retailers, e-commerce partners, wholesalers and rental companies, and directly to some end users.</p></div>
+    <div class="panel"><div class="label">How it makes money</div><p>Product sales to distribution partners, who sell on to the end customer. Residential revenue also includes aftermarket service parts, amortization of extended-warranty revenue, grid services and remote-monitoring subscriptions. Residential products are sold predominantly through independent residential dealers, national and regional retailers, e-commerce merchants, electrical/HVAC/solar wholesalers, solar installers and outdoor power equipment dealers.</p></div>
+    <div class="panel"><div class="label">Products that matter</div><p><strong>Residential:</strong> automatic home standby generators (7.5 kW to 150 kW), portable generators, residential energy storage, energy management devices and outdoor power equipment. <strong>Commercial &amp; Industrial (C&amp;I):</strong> stationary generators up to 3,250 kW, mobile generators, light towers, C&amp;I battery storage, mobile heaters and pumps.</p></div>
+    <div class="panel"><div class="label">Where it operates</div><p>In 2025, 82.5% of net sales ($3,471m) came from the company's former Domestic segment and 17.5% ($738m) from its International segment (calculated; the company reorganized its segments on 31 March 2026). No single customer provided more than 4% of 2025 net sales.</p></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">$4.21bn</div><div class="l">Net sales, 2025 (2024: $4.30bn)</div></div>
+    <div class="kpi"><div class="v">$715.5m</div><div class="l">Adjusted EBITDA, 2025 (company definition)</div></div>
+    <div class="kpi"><div class="v">$1.17bn</div><div class="l">Net sales, Q2 2026 (+10.6%)</div></div>
+    <div class="kpi"><div class="v">9,400</div><div class="l">Employees at 31 Dec 2025, incl. part-time and temporary (≈4,200 in manufacturing)</div></div>
+  </div>
+</section>
+
+<section id="history">
+  <h2><span class="num">02</span>How it got here</h2>
+  <p class="asof">Data as of <b>31 Dec 2025</b> · FY2025 10-K · <b>30 Jun 2026</b> · Q2 2026 10-Q</p>
+  <p>Generac was founded in <strong>1959</strong> and is headquartered in <strong>Waukesha, Wisconsin</strong>. Until early 2026 it reported two segments, Domestic and International. On 25 March 2026 it announced a reorganization, effective 31 March 2026, into <strong>Residential</strong> (the former Domestic segment, excluding domestic C&amp;I) and <strong>Commercial &amp; Industrial</strong> (the former International segment plus the domestic C&amp;I operations). Prior periods were recast.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>2024</th><th>2025</th></tr></thead>
+    <tbody>
+      <tr><td>Net sales</td><td>$4,295.8m</td><td>$4,209.1m (−2.0%)</td></tr>
+      <tr class="hl"><td>Adjusted EBITDA</td><td>not reviewed</td><td>$715.5m</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Sources: FY2025 10-K (net sales); 8-K of 25 Mar 2026, exhibit 99.1 (2025 adjusted EBITDA and recast segments). Adjusted EBITDA for 2024 was not reviewed.</p>
+</section>
+
+<section id="engines">
+  <h2><span class="num">03</span>Two engines — where the profit is, where the growth is</h2>
+  <p class="asof">Data as of <b>31 Dec 2025</b> (FY2025, recast) and <b>30 Jun 2026</b> (Q2 and first half 2026)</p>
+  <div class="split">
+    <div class="engine"><h4>Residential · 74% of segment profit</h4><div class="big">22.3%</div><div class="cap">2025 adjusted EBITDA margin: $558.1m on $2,501.3m of sales — 59% of segment sales.</div></div>
+    <div class="engine b"><h4>Commercial &amp; Industrial · 26%</h4><div class="big">11.3%</div><div class="cap">2025 adjusted EBITDA margin: $199.6m on $1,760.5m of sales — 41% of segment sales.</div></div>
+  </div>
+  <p class="note">Shares calculated from reported segment figures: 2,501.3 / 4,261.8 = 58.7% of segment sales; 558.1 / 757.7 = 73.7% of segment adjusted EBITDA. Corporate and eliminations: sales −$52.6m, adjusted EBITDA −$42.2m. Source: 8-K of 25 Mar 2026, exhibit 99.1.</p>
+  <h3>Where growth is coming from</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>External net sales, $m</th><th>Q2 2025</th><th>Q2 2026</th><th>Change</th><th>H1 2025</th><th>H1 2026</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>Residential</td><td>630.6</td><td>617.0</td><td class="neg">−2.2%</td><td>1,173.7</td><td>1,166.3</td><td class="neg">−0.6%</td></tr>
+      <tr class="hl"><td>Commercial &amp; Industrial</td><td>430.6</td><td>556.5</td><td class="pos">+29.2%</td><td>829.6</td><td>1,066.5</td><td class="pos">+28.6%</td></tr>
+      <tr class="total"><td>Total net sales</td><td>1,061.2</td><td>1,173.5</td><td>+10.6%</td><td>2,003.3</td><td>2,232.9</td><td>+11.5%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Source: Q2 2026 10-Q, note 7 (changes calculated). The earnings release rounds the Q2 total change to 11%.</p>
+</section>
+
+<section id="growth">
+  <h2><span class="num">04</span>What is driving the growth — large generators for data centers</h2>
+  <p class="asof">Data as of <b>29 Jul 2026</b> (release) · <b>16 Sep 2026</b> (8-K) · <b>30 Jun 2026</b> (10-Q)</p>
+  <ul class="plain">
+    <li><strong>Management says</strong> backlog for products serving the data center market was about <strong>$1.6 billion</strong> as of 29 July 2026, and that it does not include any committed volumes from a second hyperscale customer. The company also said product-specific terms with one hyperscale customer "committed nearly $700 million of volume for 2027".</li>
+    <li><strong>Supply agreement, 16 Sep 2026.</strong> The company entered a long-term supply agreement with a major data center customer, with initial deliveries expected to total <strong>$2.4 billion in 2027 and 2028</strong>. The filing does not say whether this is the second hyperscale customer referred to in the July release.</li>
+    <li><strong>Warrant.</strong> The company issued that customer a warrant to acquire up to <strong>1,693,745 shares</strong> at an exercise price of <strong>$200.9266</strong>; 307,954 vested immediately and the rest vests in tranches contingent on payments received from the customer, up to a total of $8 billion; it can be exercised until 16 Sep 2033.</li>
+    <li><strong>Capacity.</strong> In Q2 2026 the company completed the acquisition of Enercon (East Peoria, Illinois) and acquired an additional facility in Belvidere, Illinois, to expand capacity for large-megawatt generator packaging.</li>
+  </ul>
+  <div class="bars">
+    <div class="bar-row"><span class="n">Backlog (management statement)</span><div class="bar-track"><div class="bar-fill gold" style="width:100%"></div></div><span class="v">≈$1,600m</span></div>
+    <div class="bar-row"><span class="n">Remaining performance obligations (10-Q)</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="v">$143m</span></div>
+  </div>
+  <p class="note">The 10-Q reports remaining performance obligations (excluding extended warranty) of approximately $143 million at 30 Jun 2026, about 80% of which it expects to recognize over the next two years. The word "backlog" does not appear in the 10-Q, and no reconciliation between the two measures was found in the filings reviewed.</p>
+</section>
+
+<section id="peers">
+  <h2><span class="num">05</span>Competition — segment margins, same quarter</h2>
+  <p class="asof">Data as of each company's Q2 2026 report: <b>29 Jul 2026</b> (Generac, 10-Q filed 4 Aug) · <b>4 Aug 2026</b> (Cummins, Caterpillar)</p>
+  <p>In its 10-K the company names, for large generators, Caterpillar, Cummins, Rehlko (formerly Kohler Power) and MTU (Rolls-Royce), among others, and says that for certain competitors power generation is a smaller part of their business.</p>
+  <div class="tbl"><table class="peers">
+    <thead><tr><th>Segment, Q2 2026</th><th>Sales</th><th>Margin</th><th>Margin basis</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Generac — Commercial &amp; Industrial</td><td>$556.5m (+29%)</td><td>14.6%</td><td>adjusted EBITDA / segment sales; about 2 points from tariff refunds (≈12.6% without, calculated)</td></tr>
+      <tr><td>Cummins — Power Systems</td><td>$2.3bn (+19%)</td><td>24.5%</td><td>segment EBITDA / sales (Q2 2025: 22.8%)</td></tr>
+      <tr><td>Caterpillar — Power &amp; Energy</td><td>$8.24bn (+17%)</td><td>24.6%</td><td>segment profit margin (Q2 2025: 22.1%); not EBITDA</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">The bases and product scopes differ — compare the gap, not the decimals. Rolls-Royce Power Systems is not shown: its segment margin could not be confirmed in a primary filing available to this report. Generac's Residential segment margin in Q2 2026 was 34.7% (about 9 points from tariff refunds).</p>
+</section>
+
+<section id="finance">
+  <h2><span class="num">06</span>Financial strength</h2>
+  <p class="asof">Data as of <b>30 Jun 2026</b> · Q2 2026 10-Q (filed 4 Aug 2026)</p>
+  <div class="kpis">
+    <div class="kpi"><div class="v">$1.28bn</div><div class="l">Borrowings incl. $90.4m of finance leases (net of $5.1m of financing costs)</div></div>
+    <div class="kpi"><div class="v">$264.9m</div><div class="l">Cash and cash equivalents (31 Dec 2025: $341.4m)</div></div>
+    <div class="kpi"><div class="v">$999m</div><div class="l">Unused capacity, revolving facility (nothing drawn)</div></div>
+    <div class="kpi"><div class="v">$240.5m</div><div class="l">Operating cash flow, H1 2026 (H1 2025: $130.3m)</div></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Debt maturities at 30 Jun 2026, $m</th><th>2026</th><th>2027</th><th>2028</th><th>2029</th><th>2030</th><th>2031</th></tr></thead>
+    <tbody>
+      <tr><td>Term loan A ($700.0m, due 1 Jul 2030)</td><td>4.4</td><td>21.9</td><td>35.0</td><td>43.8</td><td>595.0</td><td>–</td></tr>
+      <tr><td>Term loan B ($491.3m, due 3 Jul 2031)</td><td>2.5</td><td>5.0</td><td>5.0</td><td>5.0</td><td>5.0</td><td>468.8</td></tr>
+      <tr class="total"><td>Total</td><td>6.9</td><td>26.9</td><td>40.0</td><td>48.8</td><td>600.0</td><td>468.8</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Borrowings less cash: $1,281.0m − $264.9m = $1,016.1m (calculated). Trailing-twelve-month EBITDA was not reviewed, so no leverage ratio is shown. H1 2026 capital expenditure $87.7m (H1 2025: $88.7m); acquisitions of businesses, net of cash acquired, $211.8m. Under the stock repurchase programme (new $500m programme approved 9 Feb 2026), Q2 2026 activity consisted only of shares withheld for taxes on vesting awards.</p>
+</section>
+
+<section id="underhood">
+  <h2><span class="num">07</span>Under the hood</h2>
+  <p class="asof">Data as of <b>29 Jul 2026</b> · Q2 2026 release and 10-Q</p>
+  <h3>1. Tariff refunds sit inside adjusted EBITDA</h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Q2 2025</th><th>Q2 2026</th></tr></thead>
+    <tbody>
+      <tr><td>Adjusted EBITDA</td><td>$188m (17.7%)</td><td>$291m (24.8%)</td></tr>
+      <tr><td>Pre-tax tariff refund included</td><td>–</td><td>≈$71m ($71.1m in the 10-Q)</td></tr>
+      <tr class="hl"><td>Without the refund (calculated)</td><td>$188m (17.7%)</td><td>≈$220m (≈19%)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">The refund relates to IEEPA tariffs previously paid; the company received about $61.4m in Q2 and recorded a further $27.7m receivable. 2026 guidance: adjusted EBITDA margin of 20–21%, including about 1.5 points from refunds (previous range 18.5–19.5%); net sales growth "mid-to-high teens" maintained.</p>
+  <h3>2. Mix</h3>
+  <p>The segment with the higher margin (Residential) is the one that slipped; the segment that grew (C&amp;I) earns less per dollar of sales. In its Q2 discussion the company says the C&amp;I margin was held back by "an unfavorable sales mix shift and strategic operating expense investments to support future growth".</p>
+</section>
+
+<section id="risks">
+  <h2><span class="num">08</span>Business risks</h2>
+  <p class="asof">Status as of <b>30 Jun 2026</b> (10-Q), <b>29 Jul 2026</b> (release) and <b>31 Dec 2025</b> (10-K)</p>
+  <div class="risk"><span class="tag">Concentration</span><h4>The growth rests on one market</h4><p>Both the 10-K and the 10-Q list "uncertainty regarding the growth of the data center market" among their forward-looking risks. The 10-Q adds, to that list, "contract risk related to terms with certain data center customers, including cancellation rights, delivery requirements, and potential liability exposure tied to our performance obligations or other claimed damages". The 10-K list does not contain it; the 10-Q's Item 1A states there were no material changes to risk factors since the 10-K.</p></div>
+  <div class="risk"><span class="tag">Execution</span><h4>Capacity has to be built while sales-growth guidance is held</h4><p>The company is adding capacity for large-megawatt generators (Enercon acquisition completed in Q2; additional Belvidere, Illinois facility) while maintaining 2026 net sales growth guidance of the mid-to-high teens.</p></div>
+  <div class="risk"><span class="tag">Home business</span><h4>The higher-margin business is not growing</h4><p>Residential external net sales fell 2.2% in Q2 2026 and 0.6% in the first half. The company says home standby generators have only about 6.75% penetration of the addressable US homes it defines (single-family detached, owner-occupied, home value above $175,000, per the 2023 American Housing Survey) — a statement about the size of the opportunity, not about its pace.</p></div>
+</section>
+
+<section id="watch">
+  <h2><span class="num">09</span>What to watch</h2>
+  <div class="tbl"><table class="text">
+    <thead><tr><th>Date</th><th>Event</th><th>What it will show</th></tr></thead>
+    <tbody>
+      <tr><td>4 Nov 2026 (expected; not confirmed by the company)</td><td>Q3 2026 results</td><td>Whether C&amp;I keeps growing, whether Residential returns to growth, and how the tariff-refund effect and guidance evolve</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">The expected date comes from a market-data aggregator (TradingView) and is flagged there as unconfirmed; the company's own announcement was not reachable at the time of writing.</p>
+</section>
+
+<div class="strip">No fair value · No price target · No re-entry price</div>
+
+<div class="disclaimer">
+  <p class="pos-line">"I hold no position in anything I cover here, and I take none for at least ninety days after publishing."</p>
+  <p>This report is educational content about a business. It is not investment advice, not a recommendation to buy or sell any security, and not a price call. Investing involves risk, including the loss of capital. The author is not a licensed financial adviser. Do your own due diligence.</p>
+  <p>Company figures: data as of 30 June 2026 (Q2 2026 10-Q), 29 July 2026 (results release), 31 December 2025 (FY2025 10-K and recast segments) and 16 September 2026 (supply agreement). Peer items: as of 4 August 2026. Calendar: as of 8 October 2026.</p>
+</div>
+
+<div class="sources">
+  <h3>Sources</h3>
+  <ol>
+    <li>Generac Holdings — Form 10-Q for the quarter ended 30 Jun 2026, filed 4 Aug 2026 (SEC EDGAR, accession 0001437749-26-025669). <a href="https://www.sec.gov/Archives/edgar/data/1474735/000143774926025669/gnrc20260630_10q.htm">sec.gov</a></li>
+    <li>Generac Holdings — Form 10-K for the fiscal year ended 31 Dec 2025, filed 18 Feb 2026 (accession 0001437749-26-004568). <a href="https://www.sec.gov/Archives/edgar/data/1474735/000143774926004568/gnrc20251231_10k.htm">sec.gov</a></li>
+    <li>Generac Holdings — Q2 2026 results, Form 8-K exhibit 99.1, 29 Jul 2026 (accession 0001437749-26-024731). <a href="https://www.sec.gov/Archives/edgar/data/1474735/000143774926024731/ex_994826.htm">sec.gov</a></li>
+    <li>Generac Holdings — recast 2025 segment information, Form 8-K exhibit 99.1, 25 Mar 2026 (accession 0001437749-26-009685). <a href="https://www.sec.gov/Archives/edgar/data/1474735/000143774926009685/ex_936934.htm">sec.gov</a></li>
+    <li>Generac Holdings — Form 8-K, 16 Sep 2026: transaction agreement and warrant (accession 0001437749-26-030550). <a href="https://www.sec.gov/Archives/edgar/data/1474735/000143774926030550/gnrc20260915_8k.htm">sec.gov</a></li>
+    <li>Cummins Inc. — Q2 2026 results, Form 8-K exhibit 99.1, 4 Aug 2026. <a href="https://www.sec.gov/Archives/edgar/data/26172/000002617226000026/cmi2026q28-kex99.htm">sec.gov</a></li>
+    <li>Caterpillar Inc. — Q2 2026 results, Form 8-K exhibit 99.1, 4 Aug 2026. <a href="https://www.sec.gov/Archives/edgar/data/18230/000001823026000040/ex991toformcat2q2026earnin.htm">sec.gov</a></li>
+    <li>Q3 2026 results date: TradingView earnings calendar (market-data aggregator; unconfirmed by the company), 8 Oct 2026.</li>
+  </ol>
+</div>
+
+<footer><b>The Exclusion Filter</b> — Due Diligence Before Price</footer>
+
+</div>
+
+</body>
+</html>
